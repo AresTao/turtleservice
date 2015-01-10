@@ -21,22 +21,15 @@ public class CreateTopicServlet extends HttpServlet{
 	private static Logger logger = Logger.getLogger(CreateTopicServlet.class);
 	
 	@Override
-	protected void doPut(HttpServletRequest req, HttpServletResponse res) throws IOException
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException
 	{
 		ServletOutputStream output = res.getOutputStream();
 		try {
-						
-			JSONObject jsonResult = new JSONObject();
-			jsonResult.put(ServletConstants.HAS_ERROR, false);
-			res.setStatus(ServletConstants.STATUS_CODE_OK);
-			output.println(jsonResult.toString());
-		} catch(Exception e) {
-			JSONObject jsonResult = new JSONObject();
-			jsonResult.put(ServletConstants.HAS_ERROR, true);
-			jsonResult.put(ServletConstants.ERROR_MESSAGE, e.getMessage());
+			logger.info("put method");		
 			
-			res.setStatus(ServletConstants.STATUS_CODE_BAD_REQUEST);
-			output.println(jsonResult.toString());
+			output.println("test");
+		} catch(Exception e) {
+			
 		} finally {
 			output.close();
 		}

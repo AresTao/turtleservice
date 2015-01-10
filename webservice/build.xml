@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<project default="war">
+	<property name="src.dir" location="src"></property>
+	<property name="lib.dir" location="WebContent/WEB-INF/lib"></property>
+	<property name="conf.dir" location="conf"></property>
+	<property name="current.dir" location="./"></property>
+	<property name="build.dir" location="build"></property>
+	<property name="build.jar" location="${build.dir}/jar"></property>
+	<property name="build.war" location="${build.dir}/war"></property>
+	<property name="build.war.classes" location="${build.war}/WEB-INF/classes"></property>
+	<property name="build.war.lib" location="${build.war}/WEB-INF/lib"></property>
+	<property name="build.classes" location="${build.dir}/classes"></property>
+    <property name="WebContent" location="WebContent"/>
+
+	<path id="compile-path">
+		<fileset dir="${lib.dir}" includes="**/*.jar"></fileset>
+	</path>
+	
+	<target name="clean">
+		<delete dir="${build.dir}"></delete>
+	</target>
+	
+	<target name="init" depends="clean">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.jar}"/>
+		<mkdir dir="${build.war}"/>
+		<mkdir dir="${build.war.classes}"/>
+		<mkdir dir="${build.war.lib}"/>
+		<mkdir dir="${build.classes}"/>
+		<mkdir dir="${build.dir}/test/classes"/>
+		<mkdir dir="${build.war.classes}/conf"/>
+
+        <copy todir="${build.war}/WEB-INF">
+			<fileset dir="${current.dir}/WebContent/WEB-INF" includes="web.xml"></fileset>
+			<fileset dir="${current.dir}/WebContent/WEB-INF" includes="conf"></fileset>
+		</copy>
+	</target>
+	
+	<target name="compile" depends="init">
+		<javac srcdir="${src.dir}" destdir="${build.classes}" classpathref="compile-path">
+			<compilerarg value="-Xlint:unchecked"/>
+		</javac>
+		<copy todir="${build.classes}">
+			<fileset dir="${src.dir}" excludes="**/*.java"></fileset>
+		</copy>
+	</target>
+	
+	<target name="war" depends="compile">
+		<copy todir="${build.war.classes}">
+			<fileset dir="${build.classes}"></fileset>
+		</copy>
+		<copy todir="${build.war.lib}">
+			<fileset dir="${lib.dir}"></fileset>
+		</copy>
+        <copy todir="${build.war}">
+		    <fileset dir="${current.dir}/WebContent" includes="**/*"></fileset>
+		</copy>
+		<war destfile="${build.dir}/TurtleWebService.war" webxml="${build.war}/WEB-INF/web.xml">
+			<lib dir="${build.war.lib}" />
+			<classes dir="${build.war.classes}" />
+            <fileset dir="${WebContent}"/>
+		</war>
+	</target>
+
+</project>

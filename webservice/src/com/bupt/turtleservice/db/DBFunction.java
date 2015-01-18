@@ -11,7 +11,7 @@ import com.bupt.turtleservice.constants.DBConstants;
  * 
  * DataBase Foundation Class
  * 
- * @author wang cong
+ * @author ztwu
  *
  */
 public class DBFunction {

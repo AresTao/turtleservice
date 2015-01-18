@@ -17,6 +17,7 @@ public class PolicyDBFunction {
 	
 	public boolean createPolicy()
 	{
+		
 		return true;
 	}
 	

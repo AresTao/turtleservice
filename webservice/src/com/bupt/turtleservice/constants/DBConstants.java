@@ -1,11 +1,11 @@
 package com.bupt.turtleservice.constants;
 
 public class DBConstants {
-	public static final String DB_HOST = "10.11.150.198";
-	public static final String DB_PORT = "3307";
-	public static final String DB_USER = "zabbix";
-	public static final String DB_PASS = "zabbix";
-	public static final String DB_NAME = "multicdn";
+	public static final String DB_HOST = "10.109.247.80";
+	public static final String DB_PORT = "3306";
+	public static final String DB_USER = "ztwu";
+	public static final String DB_PASS = "123";
+	public static final String DB_NAME = "turtleservice";
 	public static final int RETRY_TIMES = 3;
 	
 	//filter related

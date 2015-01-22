@@ -34,8 +34,16 @@ public class PolicyDBFunction {
 		return true;
 	}
 	
-	public boolean updatePolicy(Policy policy)
+	public boolean updatePolicy(String policyId, String content) throws Exception
 	{
+		String sql = "update `policy` set content = ? where id = ? ;";
+		List<Object> values = new ArrayList<Object>();
+		values.add(content);
+		values.add(policyId);
+		
+		this.transactionOperation.beginTransaction();
+		ResultSet res = this.transactionOperation.exec(sql, values);
+		this.transactionOperation.commitTransaction();
 		return true;
 	}
 	
@@ -44,8 +52,15 @@ public class PolicyDBFunction {
 		return null;
 	}
 	
-	public boolean deletePolicy(String policyId)
+	public boolean deletePolicy(String policyId) throws Exception
 	{
+		String sql = "DELETE FROM TABLE `policy` WHERE `id` = ?;";
+		List<Object> values = new ArrayList<Object>();
+		values.add(policyId);
+		
+		this.transactionOperation.beginTransaction();
+		ResultSet res = this.transactionOperation.exec(sql, values);
+		this.transactionOperation.commitTransaction();
 		return true;
 	}
 		

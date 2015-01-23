@@ -30,15 +30,17 @@ public class PolicyDBFunction {
 		this.transactionOperation.beginTransaction();
 		ResultSet res = this.transactionOperation.exec(sql, values);
 		this.transactionOperation.commitTransaction();
-	    logger.info("add policy");
+	    
 		return true;
 	}
 	
-	public boolean updatePolicy(String policyId, String content) throws Exception
+	public boolean updatePolicy(String policyId, String name, String content, String topic) throws Exception
 	{
-		String sql = "update `policy` set content = ? where id = ? ;";
+		String sql = "update `policy` set `name` = ? ,`content` = ? ,`topic`= ? where id = ? ;";
 		List<Object> values = new ArrayList<Object>();
+		values.add(name);
 		values.add(content);
+		values.add(topic);
 		values.add(policyId);
 		
 		this.transactionOperation.beginTransaction();
@@ -63,6 +65,4 @@ public class PolicyDBFunction {
 		this.transactionOperation.commitTransaction();
 		return true;
 	}
-		
-	
 }

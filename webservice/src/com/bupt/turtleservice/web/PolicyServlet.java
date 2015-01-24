@@ -1,18 +1,21 @@
 package com.bupt.turtleservice.web;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 
 import com.bupt.turtleservice.action.PolicyAction;
 import com.bupt.turtleservice.constants.ServletConstants;
+import com.bupt.turtleservice.model.Policy;
 import com.bupt.turtleservice.utils.StreamUtil;
 import com.sohu.azure.rest.BladeRequestMapping;
 @BladeRequestMapping(path="/policy")
@@ -55,8 +58,8 @@ public class PolicyServlet extends HttpServlet{
 	}
 	
 	/*
-	 * get /purge?account_id=XXXXXXX&internal_id=XXXXXXX
-	 * get purge list
+	 * get /policy?key=XXXXXXX
+	 * get policy list
 	 * */
 	
 	@Override
@@ -64,9 +67,21 @@ public class PolicyServlet extends HttpServlet{
 	{
 		ServletOutputStream output = res.getOutputStream();
 		try {
+			String key = req.getParameter("key");
+			List<Policy> result = null;
+			PolicyAction func = new PolicyAction();
+			result = func.getPolicy(key);
 			
+			JSONObject jsonData = convertPolicyList2JSON(result);
+			res.setStatus(ServletConstants.STATUS_CODE_OK);
+			output.println(jsonData.toString());
 		} catch(Exception e) {
+			JSONObject jsonResult = new JSONObject();
+			jsonResult.put(ServletConstants.HAS_ERROR, true);
+			jsonResult.put(ServletConstants.ERROR_MESSAGE, e.getMessage());
 			
+			res.setStatus(ServletConstants.STATUS_CODE_BAD_REQUEST);
+			output.println(jsonResult.toString());
 		} finally {
 			output.close();
 		}
@@ -127,25 +142,26 @@ public class PolicyServlet extends HttpServlet{
 			output.close();
 		}
 	}
-	/*
-	private JSONObject convertPurgeData2JSON(List<PurgeData> result) {
+	
+	private JSONObject convertPolicyList2JSON(List<Policy> result) {
 		JSONObject res = new JSONObject();
 		JSONArray detail = new JSONArray();
 		JSONObject item;
 		
-		for (PurgeData data : result)
+		for (Policy data : result)
 		{
 			item = new JSONObject();
 			
-			item.accumulate("request_id", data.getPurgeId());
-			item.accumulate("path", data.getPath());
-			item.accumulate("status", data.getStatus());
-			item.accumulate("time", DateUtil.getDatetime(data.getDate()));
+			item.accumulate("policyName", data.getName());
+			item.accumulate("content", data.getContent());
+			item.accumulate("createTime", data.getCreateTime());
 			
 			detail.add(item);
 		}
 		
-		res.accumulate("purge_items", detail);
+		res.accumulate("policyList", detail);
+		res.put(ServletConstants.HAS_ERROR, false);
+		
 		return res;
-	}*/
+	}
 }

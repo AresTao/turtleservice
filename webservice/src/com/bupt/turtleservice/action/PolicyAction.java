@@ -2,6 +2,7 @@ package com.bupt.turtleservice.action;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import net.sf.json.JSONObject;
 
@@ -54,8 +55,9 @@ public class PolicyAction {
 		return true;
 	}
 	
-	public ArrayList<Policy> getPolicy(JSONObject jsonData)
+	public List<Policy> getPolicy(String key)
 	{
+		
 		return null;
 		
 	}

@@ -122,7 +122,7 @@ public class PolicyServlet extends HttpServlet{
 		try {		
 			JSONObject jsonData = StreamUtil.getRequestJsonObject(req);
 			PolicyAction action = new PolicyAction();
-			action.createPolicy(jsonData);
+			action.updatePolicy(jsonData);
 			
 			logger.info("update policy");
 			

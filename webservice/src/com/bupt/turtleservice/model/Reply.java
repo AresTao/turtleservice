@@ -2,14 +2,21 @@ package com.bupt.turtleservice.model;
 
 public class Reply {
 
-	private String user = "";
+	private int userId;
+	private int topicId;
 	private String replyTime = "";
-	private String content = "";
-	public String getUser() {
-		return user;
+	private String message = "";
+	public int getUserId() {
+		return userId;
 	}
-	public void setUser(String user) {
-		this.user = user;
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	public int getTopicId() {
+		return topicId;
+	}
+	public void setTopicId(int topicId) {
+		this.topicId = topicId;
 	}
 	public String getReplyTime() {
 		return replyTime;
@@ -17,12 +24,11 @@ public class Reply {
 	public void setReplyTime(String replyTime) {
 		this.replyTime = replyTime;
 	}
-	public String getContent() {
-		return content;
+	public String getMessage() {
+		return message;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setMessage(String message) {
+		this.message = message;
 	}
-	
 	
 }

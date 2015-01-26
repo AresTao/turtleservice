@@ -49,9 +49,31 @@ public class PolicyDBFunction {
 		return true;
 	}
 	
-	public List<Policy> getPolicy(String policyId)
+	public List<Policy> getPolicy(String key)
 	{
-		return null;
+		String sql = "SELECT * FROM `policy` where `topic` = ? ;";
+		List<Object> values = new ArrayList<Object>();
+		values.add(key);
+		
+		List<Policy> result = null;
+		
+		try{
+			ResultSet res = this.transactionOperation.exec(sql, values);
+			while(res.next())
+			{
+				Policy item = new Policy();
+				item.setContent(res.getString("content"));
+				item.setCreateTime(res.getString("create_time"));
+				item.setName(res.getString("name"));
+				
+				result.add(item);
+			}
+		}
+		catch (Exception e) {
+			logger.error("select policy error");
+		}
+		
+		return result;
 	}
 	
 	public boolean deletePolicy(String policyId) throws Exception

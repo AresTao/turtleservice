@@ -1,24 +1,38 @@
 package com.bupt.turtleservice.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Topic {
 
-	private String name = "";
-	private String content = "";
+	private int classId;
+	private String userName = "";
+	private String title = "";
+	private String description = "";
 	private String createTime = "";
-	private ArrayList<Reply> replyList;
-	public String getName() {
-		return name;
+	private List<Reply> replyList;
+	public int getClassId() {
+		return classId;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setClassId(int classId) {
+		this.classId = classId;
 	}
-	public String getContent() {
-		return content;
+	public String getUserName() {
+		return userName;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public String getCreateTime() {
 		return createTime;
@@ -26,10 +40,10 @@ public class Topic {
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
-	public ArrayList<Reply> getReplyList() {
+	public List<Reply> getReplyList() {
 		return replyList;
 	}
-	public void setReplyList(ArrayList<Reply> replyList) {
+	public void setReplyList(List<Reply> replyList) {
 		this.replyList = replyList;
 	}
 	

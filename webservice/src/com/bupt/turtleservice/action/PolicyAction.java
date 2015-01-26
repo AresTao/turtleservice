@@ -57,9 +57,9 @@ public class PolicyAction {
 	
 	public List<Policy> getPolicy(String key)
 	{
-		
-		return null;
-		
+		PolicyDBFunction func = new PolicyDBFunction(this.transactionOperation);
+		List<Policy> res = func.getPolicy(key);
+		return res;
 	}
 	
 	public static void main(String args[]) throws Exception

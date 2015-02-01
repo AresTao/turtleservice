@@ -1,7 +1,5 @@
 package com.bupt.turtleservice.action;
 
-import java.util.List;
-
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
@@ -24,31 +22,29 @@ public class UserAction {
 	{
 		UserDBFunction func = new UserDBFunction(this.transactionOperation);
 		
-		String classId = jsonData.getString("classId");
-		String title = jsonData.getString("title");
-		String userId = jsonData.getString("userId");
-		String description = jsonData.getString("description");
-		String dateTime = jsonData.getString("dateTime");
-		func.createUser(classId, title, userId, description, dateTime);
+		String account = jsonData.getString("account");
+		String passwd = jsonData.getString("passwd");
+		String name = jsonData.getString("name");
+		
+		func.createUser(account, passwd, name);
 		return true;
 	}
 	
 	public boolean updateUser(JSONObject jsonData) throws Exception
 	{
 		UserDBFunction func = new UserDBFunction(this.transactionOperation);
-		String title = jsonData.getString("title");
-		String description = jsonData.getString("description");
-		String topicId = jsonData.getString("topicId");
+		String name = jsonData.getString("name");
+		String account = jsonData.getString("account");
 		
-		func.updateUser(topicId, title, description);
+		func.updateUser(account, name);
 		return true;
 	}
 	
 	public boolean deleteUser(JSONObject jsonData) throws Exception
 	{
 		UserDBFunction func = new UserDBFunction(this.transactionOperation);
-		String topicId = jsonData.getString("topicId");
-		func.deleteUser(topicId);
+		String account = jsonData.getString("account");
+		func.deleteUser(account);
 		return true;
 	}
 	
@@ -56,6 +52,24 @@ public class UserAction {
 	{
 		UserDBFunction func = new UserDBFunction(this.transactionOperation);
 		User res = func.getUser(account);
+		return res;
+	}
+	
+	public boolean registerUser(JSONObject jsonData) throws Exception
+	{
+		UserDBFunction func = new UserDBFunction(this.transactionOperation);
+		String account = jsonData.getString("account");
+		String passwd = jsonData.getString("passwd");
+		boolean res = func.registerUser(account, passwd);
+		return res;
+	}
+	
+	public boolean unRegisterUser(JSONObject jsonData) throws Exception
+	{
+		UserDBFunction func = new UserDBFunction(this.transactionOperation);
+		String account = jsonData.getString("account");
+		String passwd = jsonData.getString("passwd");
+		boolean res = func.unRegisterUser(account, passwd);
 		return res;
 	}
 }

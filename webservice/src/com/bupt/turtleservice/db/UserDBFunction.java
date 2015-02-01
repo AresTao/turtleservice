@@ -17,19 +17,20 @@ public class UserDBFunction {
 		this.transactionOperation = transactionOperation;
 	}
 	
-	public boolean createUser(String name, String account, String passwd, String photo, String birthday, String school, String major, String homeTown, boolean isSingle) throws Exception
+	public boolean createUser( String account, String passwd, String name) throws Exception//,String photo, String birthday, String school, String major, String homeTown, boolean isSingle) throws Exception
 	{
-		String sql = "INSERT INTO `user` (`name`, `account`, `passwd`, `photo`, `birthday`, `school`, `major`, `homeTown`,`isSingle`) VALUES (?,?,?,?,?,?,?,?,?);";
+		String sql = "INSERT INTO `user` (`name`, `account`, `passwd`) VALUES (?,?,?); ";
+				//, `photo`, `birthday`, `school`, `major`, `homeTown`,`isSingle`) VALUES (?,?,?,?,?,?,?,?,?);";
 		List<Object> values = new ArrayList<Object>();
 		
 		values.add(name);
 		values.add(account);
 		values.add(passwd);
-		values.add(photo);
-		values.add(birthday);values.add(school);
-		values.add(major);
-		values.add(homeTown);
-		values.add(isSingle);
+		//values.add(photo);
+		//values.add(birthday);values.add(school);
+		//values.add(major);
+		//values.add(homeTown);
+		//values.add(isSingle);
 		
 		this.transactionOperation.beginTransaction();
 		ResultSet res = this.transactionOperation.exec(sql, values);
@@ -38,13 +39,11 @@ public class UserDBFunction {
 		return true;
 	}
 	
-	public boolean updateUser(String account, String name, String content, String topic) throws Exception
+	public boolean updateUser(String account, String name) throws Exception
 	{
-		String sql = "update `user` set `name` = ? ,`content` = ? ,`topic`= ? where id = ? ;";
+		String sql = "update `user` set `name` = ? where account = ? ;";
 		List<Object> values = new ArrayList<Object>();
 		values.add(name);
-		values.add(content);
-		values.add(topic);
 		values.add(account);
 		
 		this.transactionOperation.beginTransaction();
@@ -66,10 +65,12 @@ public class UserDBFunction {
 			while(res.next())
 			{
 				result = new User();
+				result.setBirthday(res.getString("birthday"));
+				result.setPhoto(res.getString("header"));
+				result.setSingle(res.getBoolean("isSingle"));
 				//result.setContent(res.getString("content"));
 				//result.setCreateTime(res.getString("create_time"));
 				result.setName(res.getString("name"));
-				
 			}
 		}
 		catch (Exception e) {
@@ -85,6 +86,32 @@ public class UserDBFunction {
 		List<Object> values = new ArrayList<Object>();
 		values.add(account);
 		
+		this.transactionOperation.beginTransaction();
+		ResultSet res = this.transactionOperation.exec(sql, values);
+		this.transactionOperation.commitTransaction();
+		return true;
+	}
+	
+	public boolean registerUser(String account, String passwd) throws Exception
+	{
+		String sql = "update `user` set `isOnline` = 1  where `account` = ?, `passwd` = ? ;";
+		List<Object> values = new ArrayList<Object>();
+		values.add(account);
+		values.add(passwd);
+			
+		this.transactionOperation.beginTransaction();
+		ResultSet res = this.transactionOperation.exec(sql, values);
+		this.transactionOperation.commitTransaction();
+		return true;
+	}
+	
+	public boolean unRegisterUser(String account, String passwd) throws Exception
+	{
+		String sql = "update `user` set `isOnline` = 0  where `account` = ?, `passwd` = ? ;";
+		List<Object> values = new ArrayList<Object>();
+		values.add(account);
+		values.add(passwd);
+			
 		this.transactionOperation.beginTransaction();
 		ResultSet res = this.transactionOperation.exec(sql, values);
 		this.transactionOperation.commitTransaction();

@@ -7,8 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
 import org.apache.log4j.Logger;
 
+import com.bupt.turtleservice.action.UserAction;
+import com.bupt.turtleservice.constants.ServletConstants;
+import com.bupt.turtleservice.utils.StreamUtil;
 import com.sohu.azure.rest.BladeRequestMapping;
 
 @BladeRequestMapping(path="/registeruser")
@@ -21,47 +26,58 @@ public class RegisterUserServlet extends HttpServlet{
 	private static Logger logger = Logger.getLogger(RegisterUserServlet.class);
 	
 	@Override
-	protected void doPut(HttpServletRequest req, HttpServletResponse res) throws IOException
-	{
-		ServletOutputStream output = res.getOutputStream();
-		try {
-			logger.info("put method");		
-			
-			output.println("test");
-		} catch(Exception e) {
-			
-		} finally {
-			output.close();
-		}
-	}
-	
-	/*
-	 * get /purge?account_id=XXXXXXX&internal_id=XXXXXXX
-	 * get purge list
-	 * */
-	
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException
-	{
-		ServletOutputStream output = res.getOutputStream();
-		try {
-			
-		} catch(Exception e) {
-			
-		} finally {
-			output.close();
-		}
-	}
-	
-	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse res) throws IOException
 	{
-		
+		ServletOutputStream output = res.getOutputStream();
+		try {		
+			JSONObject jsonData = StreamUtil.getRequestJsonObject(req);
+			UserAction action = new UserAction();
+			action.unRegisterUser(jsonData);
+			
+			logger.info("unregister user");
+			
+			JSONObject result = new JSONObject();
+			result.put(ServletConstants.HAS_ERROR, false);
+			res.setStatus(ServletConstants.STATUS_CODE_OK);
+			output.println(result.toString());
+			
+		} catch(Exception e) {
+			JSONObject jsonResult = new JSONObject();
+			jsonResult.put(ServletConstants.HAS_ERROR, true);
+			jsonResult.put(ServletConstants.ERROR_MESSAGE, e.getMessage());
+			
+			res.setStatus(ServletConstants.STATUS_CODE_BAD_REQUEST);
+			output.println(jsonResult.toString());
+		} finally {
+			output.close();
+		}
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException
 	{
-		
+		ServletOutputStream output = res.getOutputStream();
+		try {		
+			JSONObject jsonData = StreamUtil.getRequestJsonObject(req);
+			UserAction action = new UserAction();
+			action.registerUser(jsonData);
+			
+			logger.info("register user");
+			
+			JSONObject result = new JSONObject();
+			result.put(ServletConstants.HAS_ERROR, false);
+			res.setStatus(ServletConstants.STATUS_CODE_OK);
+			output.println(result.toString());
+			
+		} catch(Exception e) {
+			JSONObject jsonResult = new JSONObject();
+			jsonResult.put(ServletConstants.HAS_ERROR, true);
+			jsonResult.put(ServletConstants.ERROR_MESSAGE, e.getMessage());
+			
+			res.setStatus(ServletConstants.STATUS_CODE_BAD_REQUEST);
+			output.println(jsonResult.toString());
+		} finally {
+			output.close();
+		}
 	}
 }

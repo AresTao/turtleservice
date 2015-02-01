@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
 CREATE TABLE IF NOT EXISTS `user` (
     `id`                                INT            AUTO_INCREMENT                        ,
     `name`                              VARCHAR(128)   NOT NULL                              ,
+	`account`                           VARCHAR(128)   NOT NULL                              ,
     `passwd`                            VARCHAR(512)   NOT NULL                              ,
 	`header`                            VARCHAR(128)                                         ,
     `sex`                               bit                                                  ,
@@ -26,8 +27,10 @@ CREATE TABLE IF NOT EXISTS `user` (
 	`school`                            VARCHAR(128)                                         ,
 	`country`                           VARCHAR(64)                                          ,
 	`sign`                              VARCHAR(128)                                         ,
+	`isOnline`                          bit                                                  ,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+##sex 0 male 1 female
 
 CREATE TABLE IF NOT EXISTS `topic` (
     `id`                                INT            AUTO_INCREMENT                        ,

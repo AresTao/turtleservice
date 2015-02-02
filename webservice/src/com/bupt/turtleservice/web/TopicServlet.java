@@ -163,8 +163,8 @@ public class TopicServlet extends HttpServlet{
 				reply = new JSONObject();
 				
 				reply.accumulate("userId", replyItem.getUserId());
-				reply.accumulate("", replyItem.getReplyTime());
-				reply.accumulate("", replyItem.getMessage());
+				reply.accumulate("replyTime", replyItem.getReplyTime());
+				reply.accumulate("message", replyItem.getMessage());
 				
 				replyList.add(reply);
 			}
@@ -173,7 +173,7 @@ public class TopicServlet extends HttpServlet{
 			detail.add(item);
 		}
 		
-		res.accumulate("TopicList", detail);
+		res.accumulate("topicList", detail);
 		res.put(ServletConstants.HAS_ERROR, false);
 		
 		return res;

@@ -59,6 +59,7 @@ public class TopicDBFunction {
 		
 		try{
 			ResultSet res = this.transactionOperation.exec(sql, values);
+			result = new ArrayList<Topic>();
 			while(res.next())
 			{
 				Topic item = new Topic();
@@ -88,6 +89,7 @@ public class TopicDBFunction {
 		
 		try{
 			ResultSet res = this.transactionOperation.exec(sql, values);
+			result = new ArrayList<Reply>();
 			while(res.next())
 			{
 				Reply item = new Reply();

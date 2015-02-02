@@ -59,9 +59,11 @@ public class PolicyDBFunction {
 		
 		try{
 			ResultSet res = this.transactionOperation.exec(sql, values);
+			result = new ArrayList<Policy>();
 			while(res.next())
 			{
 				Policy item = new Policy();
+				System.out.println(res.getString("content"));
 				item.setContent(res.getString("content"));
 				item.setCreateTime(res.getString("create_time"));
 				item.setName(res.getString("name"));

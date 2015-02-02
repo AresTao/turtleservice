@@ -55,7 +55,7 @@
         <copy todir="${build.war}">
 		    <fileset dir="${current.dir}/WebContent" includes="**/*"></fileset>
 		</copy>
-		<war destfile="${build.dir}/TurtleWebService.war" webxml="${build.war}/WEB-INF/web.xml">
+		<war destfile="${build.dir}/turtle.war" webxml="${build.war}/WEB-INF/web.xml">
 			<lib dir="${build.war.lib}" />
 			<classes dir="${build.war.classes}" />
             <fileset dir="${WebContent}"/>

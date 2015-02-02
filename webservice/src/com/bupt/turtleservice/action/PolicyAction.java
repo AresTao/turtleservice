@@ -73,6 +73,14 @@ public class PolicyAction {
 		
 		PolicyAction action = new PolicyAction();
 		System.out.println(jsonData.toString());
-		action.createPolicy(jsonData);
+		//action.createPolicy(jsonData);
+		
+		List<Policy> res = action.getPolicy("test");
+		for (Policy item : res)
+		{
+			System.out.println(item.getContent());
+		}
+		
+		
 	}
 }

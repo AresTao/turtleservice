@@ -19,4 +19,39 @@
     <url-pattern>/test</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>TopicServlet</servlet-name>
+    <servlet-class>com.bupt.turtleservice.web.TopicServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TopicServlet</servlet-name>
+    <url-pattern>/topic</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>PolicyServlet</servlet-name>
+    <servlet-class>com.bupt.turtleservice.web.PolicyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PolicyServlet</servlet-name>
+    <url-pattern>/policy</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>UserServlet</servlet-name>
+    <servlet-class>com.bupt.turtleservice.web.UserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserServlet</servlet-name>
+    <url-pattern>/user</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>RegisterUserServlet</servlet-name>
+    <servlet-class>com.bupt.turtleservice.web.RegisterUserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegisterUserServlet</servlet-name>
+    <url-pattern>/registeruser</url-pattern>
+  </servlet-mapping>
 </web-app>

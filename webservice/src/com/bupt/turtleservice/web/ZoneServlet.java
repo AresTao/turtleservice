@@ -60,7 +60,6 @@ public class ZoneServlet extends HttpServlet{
 		JSONArray detail = new JSONArray();
 		JSONObject item;
 		
-		
 		for (String zone : result)
 		{
 			item = new JSONObject();

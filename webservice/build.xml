@@ -38,7 +38,7 @@
 	
 	<target name="compile" depends="init">
 		<javac srcdir="${src.dir}" destdir="${build.classes}" classpathref="compile-path">
-			<compilerarg value="-Xlint:unchecked"/>
+			<compilerarg line="-encoding GBK "/>
 		</javac>
 		<copy todir="${build.classes}">
 			<fileset dir="${src.dir}" excludes="**/*.java"></fileset>

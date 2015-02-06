@@ -1,6 +1,8 @@
 package com.bupt.turtleservice.web;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
@@ -29,7 +31,17 @@ public class MailServlet extends HttpServlet{
 		try {		
 			JSONObject jsonData = StreamUtil.getRequestJsonObject(req);
 			String email = jsonData.getString("email");
-			
+			if (! isEmail(email))
+			{
+				JSONObject jsonResult = new JSONObject();
+				jsonResult.put(ServletConstants.HAS_ERROR, true);
+				jsonResult.put(ServletConstants.ERROR_MESSAGE, "illegal email address");
+				
+				res.setStatus(ServletConstants.STATUS_CODE_BAD_REQUEST);
+				output.println(jsonResult.toString());
+				return;
+			}
+				
 			EmailSender sender = new EmailSender();
 			
 			logger.info("send file to "+ email);
@@ -56,4 +68,11 @@ public class MailServlet extends HttpServlet{
 			output.close();
 		}
 	}
+	private boolean isEmail(String email){  
+        if (null==email || "".equals(email)) return false;    
+//      Pattern p = Pattern.compile("\\w+@(\\w+.)+[a-z]{2,3}"); //ºÚµ•∆•≈‰  
+        Pattern p =  Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");//∏¥‘”∆•≈‰  
+        Matcher m = p.matcher(email);  
+        return m.matches();  
+    }
 }

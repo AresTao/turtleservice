@@ -21,7 +21,7 @@ import com.bupt.turtleservice.model.Reply;
 import com.bupt.turtleservice.model.Topic;
 import com.bupt.turtleservice.utils.StreamUtil;
 import com.sohu.azure.rest.BladeRequestMapping;
-@BladeRequestMapping(path="/topic")
+@BladeRequestMapping(path="/bbs/topic")
 public class TopicServlet extends HttpServlet{
 
 	/**

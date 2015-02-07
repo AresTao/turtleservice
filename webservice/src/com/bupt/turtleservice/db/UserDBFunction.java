@@ -65,12 +65,12 @@ public class UserDBFunction {
 			while(res.next())
 			{
 				result = new User();
-				result.setBirthday(res.getString("birthday"));
-				result.setPhoto(res.getString("header"));
-				result.setSingle(res.getBoolean("isSingle"));
+				result.setName(res.getString("name"));
+				//result.setBirthday(res.getString("birthday"));
+				//result.setPhoto(res.getString("header"));
+				//result.setSingle(res.getBoolean("isSingle"));
 				//result.setContent(res.getString("content"));
 				//result.setCreateTime(res.getString("create_time"));
-				result.setName(res.getString("name"));
 			}
 		}
 		catch (Exception e) {
@@ -94,7 +94,7 @@ public class UserDBFunction {
 	
 	public boolean registerUser(String account, String passwd) throws Exception
 	{
-		String sql = "update `user` set `isOnline` = 1  where `account` = ?, `passwd` = ? ;";
+		String sql = "update `user` set `isOnline` = 1  where `account` = ? and `passwd` = ? ;";
 		List<Object> values = new ArrayList<Object>();
 		values.add(account);
 		values.add(passwd);
@@ -107,7 +107,7 @@ public class UserDBFunction {
 	
 	public boolean unRegisterUser(String account, String passwd) throws Exception
 	{
-		String sql = "update `user` set `isOnline` = 0  where `account` = ?, `passwd` = ? ;";
+		String sql = "update `user` set `isOnline` = 0  where `account` = ? and `passwd` = ? ;";
 		List<Object> values = new ArrayList<Object>();
 		values.add(account);
 		values.add(passwd);

@@ -20,6 +20,8 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 import javax.mail.internet.MimeMultipart;
+
+import com.bupt.turtleservice.constants.MailConstants;
  
 /**
  * 
@@ -114,12 +116,18 @@ public class EmailSender {
 	     }
 	 } 
 	 public static void main(String[] args){
-	     EmailSender cn = new EmailSender();
+	     //EmailSender cn = new EmailSender();
 	     //设置发件人地址、收件人地址和邮件标题
-	     cn.setAddress("wuzhantao0725@163.com","wuzhantao0725@163.com","一个带附件的JavaMail邮件");
+	     //cn.setAddress("wuzhantao0725@163.com","wuzhantao0725@163.com","一个带附件的JavaMail邮件");
 	     //设置要发送附件的位置和标题
-	     cn.setAffix("d:/字帖.docx","字帖.docx");
+	     //cn.setAffix("d:/字帖.docx","字帖.docx");
 	     //设置smtp服务器以及邮箱的帐号和密码
-	     cn.send("smtp.163.com","wuzhantao0725","880612");
+	     //cn.send("smtp.163.com","wuzhantao0725","880612");
+	     EmailSender sender = new EmailSender();
+		 sender.setAddress(MailConstants.MAIL_FULLACCOUNT,MailConstants.MAIL_FULLACCOUNT,MailConstants.MAIL_TOPIC);
+	     //设置要发送附件的位置和标题
+		 sender.setAffix("d:/字帖.docx","字帖.docx");
+	     //设置smtp服务器以及邮箱的帐号和密码
+		 sender.send(MailConstants.MAIL_HOST,MailConstants.MAIL_ACCOUNT,MailConstants.MAIL_PASSWD);
 	 }
 }

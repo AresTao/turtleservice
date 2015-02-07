@@ -39,23 +39,24 @@ public class MailServlet extends HttpServlet{
 				
 				res.setStatus(ServletConstants.STATUS_CODE_BAD_REQUEST);
 				output.println(jsonResult.toString());
-				return;
-			}
+			} else
+			{
 				
-			EmailSender sender = new EmailSender();
+				EmailSender sender = new EmailSender();
 			
-			logger.info("send file to "+ email);
+				logger.info("send file to "+ email);
 			
-			sender.setAddress(MailConstants.MAIL_FULLACCOUNT,email,MailConstants.MAIL_TOPIC);
+				sender.setAddress(MailConstants.MAIL_FULLACCOUNT,email,MailConstants.MAIL_TOPIC);
 		     //设置要发送附件的位置和标题
-			sender.setAffix(MailConstants.FILE_ROOT,MailConstants.FILE_NAME);
+				sender.setAffix(MailConstants.FILE_ROOT,MailConstants.FILE_NAME);
 		     //设置smtp服务器以及邮箱的帐号和密码
-			sender.send(MailConstants.MAIL_HOST,MailConstants.MAIL_ACCOUNT,MailConstants.MAIL_PASSWD);
+				sender.send(MailConstants.MAIL_HOST,MailConstants.MAIL_ACCOUNT,MailConstants.MAIL_PASSWD);
 			
-			JSONObject result = new JSONObject();
-			result.put(ServletConstants.HAS_ERROR, false);
-			res.setStatus(ServletConstants.STATUS_CODE_OK);
-			output.println(result.toString());
+				JSONObject result = new JSONObject();
+				result.put(ServletConstants.HAS_ERROR, false);
+				res.setStatus(ServletConstants.STATUS_CODE_OK);
+				output.println(result.toString());
+			}
 			
 		} catch(Exception e) {
 			JSONObject jsonResult = new JSONObject();

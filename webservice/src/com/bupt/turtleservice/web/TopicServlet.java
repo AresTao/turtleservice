@@ -102,34 +102,6 @@ public class TopicServlet extends HttpServlet{
 		}
 	}
 
-	private JSONObject convertTopic2JSON(Topic result) {
-		JSONObject res = new JSONObject();
-		JSONObject item = new JSONObject();
-		JSONArray replyList = new JSONArray();
-		JSONObject reply;
-		
-		item.accumulate("title", result.getTitle());
-		item.accumulate("description", result.getDescription());
-		item.accumulate("createTime", result.getCreateTime());
-			
-		for (Reply replyItem : result.getReplyList())
-		{
-			reply = new JSONObject();
-				
-			reply.accumulate("userId", replyItem.getUserId());
-			reply.accumulate("replyTime", replyItem.getReplyTime());
-			reply.accumulate("message", replyItem.getMessage());
-				
-			replyList.add(reply);
-		}
-		item.accumulate("replyList", replyList);
-		
-		res.accumulate("topic", item);
-		res.put(ServletConstants.HAS_ERROR, false);
-		
-		return res;
-	}
-
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse res) throws IOException
 	{
@@ -186,6 +158,34 @@ public class TopicServlet extends HttpServlet{
 		}
 	}
 	
+	private JSONObject convertTopic2JSON(Topic result) {
+		JSONObject res = new JSONObject();
+		JSONObject item = new JSONObject();
+		JSONArray replyList = new JSONArray();
+		JSONObject reply;
+		
+		item.accumulate("title", result.getTitle());
+		item.accumulate("description", result.getDescription());
+		item.accumulate("createTime", result.getCreateTime());
+			
+		for (Reply replyItem : result.getReplyList())
+		{
+			reply = new JSONObject();
+				
+			reply.accumulate("userId", replyItem.getUserId());
+			reply.accumulate("replyTime", replyItem.getReplyTime());
+			reply.accumulate("message", replyItem.getMessage());
+				
+			replyList.add(reply);
+		}
+		item.accumulate("replyList", replyList);
+		
+		res.accumulate("topic", item);
+		res.put(ServletConstants.HAS_ERROR, false);
+		
+		return res;
+	}
+
 	private JSONObject convertTopicList2JSON(List<Topic> result) {
 		JSONObject res = new JSONObject();
 		JSONArray detail = new JSONArray();

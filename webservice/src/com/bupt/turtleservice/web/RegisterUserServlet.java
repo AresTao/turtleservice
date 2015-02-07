@@ -26,43 +26,22 @@ public class RegisterUserServlet extends HttpServlet{
 	private static Logger logger = Logger.getLogger(RegisterUserServlet.class);
 	
 	@Override
-	protected void doDelete(HttpServletRequest req, HttpServletResponse res) throws IOException
-	{
-		ServletOutputStream output = res.getOutputStream();
-		try {		
-			JSONObject jsonData = StreamUtil.getRequestJsonObject(req);
-			UserAction action = new UserAction();
-			action.unRegisterUser(jsonData);
-			
-			logger.info("unregister user");
-			
-			JSONObject result = new JSONObject();
-			result.put(ServletConstants.HAS_ERROR, false);
-			res.setStatus(ServletConstants.STATUS_CODE_OK);
-			output.println(result.toString());
-			
-		} catch(Exception e) {
-			JSONObject jsonResult = new JSONObject();
-			jsonResult.put(ServletConstants.HAS_ERROR, true);
-			jsonResult.put(ServletConstants.ERROR_MESSAGE, e.getMessage());
-			
-			res.setStatus(ServletConstants.STATUS_CODE_BAD_REQUEST);
-			output.println(jsonResult.toString());
-		} finally {
-			output.close();
-		}
-	}
-	
-	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException
 	{
 		ServletOutputStream output = res.getOutputStream();
 		try {		
 			JSONObject jsonData = StreamUtil.getRequestJsonObject(req);
+			String method = jsonData.getString("method");
 			UserAction action = new UserAction();
-			action.registerUser(jsonData);
-			
-			logger.info("register user");
+			if (method.equals("register"))
+			{
+				action.registerUser(jsonData);
+				logger.info("register user");
+			} else
+			{
+				action.unRegisterUser(jsonData);
+				logger.info("unRegister user");
+			}
 			
 			JSONObject result = new JSONObject();
 			result.put(ServletConstants.HAS_ERROR, false);

@@ -25,7 +25,25 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>TopicServlet</servlet-name>
-    <url-pattern>/topic</url-pattern>
+    <url-pattern>/bbs/topic</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ZoneServlet</servlet-name>
+    <servlet-class>com.bupt.turtleservice.web.ZoneServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ZoneServlet</servlet-name>
+    <url-pattern>/bbs/zone</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>MailServlet</servlet-name>
+    <servlet-class>com.bupt.turtleservice.web.MailServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MailServlet</servlet-name>
+    <url-pattern>/mail</url-pattern>
   </servlet-mapping>
   
   <servlet>

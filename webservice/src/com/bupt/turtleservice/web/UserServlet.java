@@ -94,12 +94,9 @@ public class UserServlet extends HttpServlet{
 		
 		item = new JSONObject();
 			
-		item.accumulate("name", data.getName());
-					
-		detail.add(item);
+		item.accumulate("name", data.getName());		
 		
-		
-		res.accumulate("user", detail);
+		res.accumulate("user", item);
 		res.put(ServletConstants.HAS_ERROR, false);
 		
 		return res;

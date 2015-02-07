@@ -5,6 +5,7 @@ import java.util.List;
 public class Topic {
 
 	private int classId;
+	private int topicId;
 	private String userName = "";
 	private String title = "";
 	private String description = "";
@@ -45,6 +46,12 @@ public class Topic {
 	}
 	public void setReplyList(List<Reply> replyList) {
 		this.replyList = replyList;
+	}
+	public int getTopicId() {
+		return topicId;
+	}
+	public void setTopicId(int topicId) {
+		this.topicId = topicId;
 	}
 	
 	

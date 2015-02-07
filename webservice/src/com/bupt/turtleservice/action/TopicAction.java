@@ -1,5 +1,6 @@
 package com.bupt.turtleservice.action;
 
+import java.util.Date;
 import java.util.List;
 
 import net.sf.json.JSONObject;
@@ -9,7 +10,9 @@ import org.apache.log4j.Logger;
 import com.bupt.turtleservice.db.TopicDBFunction;
 import com.bupt.turtleservice.db.TransactionException;
 import com.bupt.turtleservice.db.TransactionOperation;
+import com.bupt.turtleservice.model.Policy;
 import com.bupt.turtleservice.model.Topic;
+import com.bupt.turtleservice.utils.DateUtil;
 
 public class TopicAction {
 
@@ -52,10 +55,37 @@ public class TopicAction {
 		return true;
 	}
 	
-	public List<Topic> getTopic(String key)
+	public List<Topic> getTopicList(String key)
 	{
 		TopicDBFunction func = new TopicDBFunction(this.transactionOperation);
-		List<Topic> res = func.getTopic(key);
+		List<Topic> res = func.getTopicList(key);
 		return res;
+	}
+	
+	public Topic getTopic(int topicId)
+	{
+		TopicDBFunction func = new TopicDBFunction(this.transactionOperation);
+		Topic res = func.getTopic(topicId);
+		return res;
+	}
+	
+	public static void main(String args[]) throws Exception
+	{
+		JSONObject jsonData = new JSONObject();
+		jsonData.accumulate("classId", 1);
+		jsonData.accumulate("title", "test");
+		jsonData.accumulate("userId", 4);
+		jsonData.accumulate("dateTime", DateUtil.getDatetime(new Date()));
+		jsonData.accumulate("description", "test");
+		
+		TopicAction action = new TopicAction();
+		System.out.println(jsonData.toString());
+		action.createTopic(jsonData);
+		
+		List<Topic> res = action.getTopicList("test");
+		for (Topic item : res)
+		{
+			System.out.println(item.getDescription());
+		}
 	}
 }

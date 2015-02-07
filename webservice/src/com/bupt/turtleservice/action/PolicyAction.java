@@ -1,6 +1,5 @@
 package com.bupt.turtleservice.action;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -80,7 +79,5 @@ public class PolicyAction {
 		{
 			System.out.println(item.getContent());
 		}
-		
-		
 	}
 }

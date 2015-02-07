@@ -49,11 +49,11 @@ public class TopicDBFunction {
 		return true;
 	}
 	
-	public List<Topic> getTopic(String classId)
+	public List<Topic> getTopicList(String key)
 	{
-		String sql = "SELECT * FROM `topic` where `classId` = ? ;";
+		String sql = "select * from topic left join class on topic.classId = (select id from class where name = ?);";
 		List<Object> values = new ArrayList<Object>();
-		values.add(classId);
+		values.add(key);
 		
 		List<Topic> result = null;
 		
@@ -63,13 +63,41 @@ public class TopicDBFunction {
 			while(res.next())
 			{
 				Topic item = new Topic();
+				item.setTopicId(res.getInt("id"));
 				item.setTitle(res.getString("title"));
 				item.setCreateTime(res.getString("dateTime"));
 				item.setDescription(res.getString("description"));
 				
-				List<Reply> replyList = getReplyList(res.getInt("id"));
-				item.setReplyList(replyList);
 				result.add(item);
+			}
+		}
+		catch (Exception e) {
+			logger.error("select topic error");
+		}
+		
+		return result;
+	}
+	
+	public Topic getTopic(int topicId)
+	{
+		String sql = "select * from `topic` where `id` = ?;";
+		List<Object> values = new ArrayList<Object>();
+		values.add(topicId);
+		
+		Topic result = null;
+		
+		try{
+			ResultSet res = this.transactionOperation.exec(sql, values);
+			result = new Topic();
+			while(res.next())
+			{
+				result.setTopicId(res.getInt("id"));
+				result.setTitle(res.getString("title"));
+				result.setCreateTime(res.getString("dateTime"));
+				result.setDescription(res.getString("description"));
+				
+				List<Reply> replyList = getReplyList(result.getTopicId());
+				result.setReplyList(replyList);
 			}
 		}
 		catch (Exception e) {

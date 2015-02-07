@@ -20,6 +20,7 @@ import com.bupt.turtleservice.model.Policy;
 import com.bupt.turtleservice.model.Reply;
 import com.bupt.turtleservice.model.Topic;
 import com.bupt.turtleservice.utils.StreamUtil;
+import com.bupt.turtleservice.utils.StringUtil;
 import com.sohu.azure.rest.BladeRequestMapping;
 @BladeRequestMapping(path="/bbs/topic")
 public class TopicServlet extends HttpServlet{
@@ -59,8 +60,11 @@ public class TopicServlet extends HttpServlet{
 	}
 	
 	/*
-	 * get /topic?classId=XXXXXXX
+	 * get /topic?key=XXXXXXX
 	 * get topic list
+	 * 
+	 * get /topic?topicId=XXXXX
+	 * get topic
 	 * */
 	
 	@Override
@@ -68,12 +72,22 @@ public class TopicServlet extends HttpServlet{
 	{
 		ServletOutputStream output = res.getOutputStream();
 		try {
-			String classId = req.getParameter("classId");
-			List<Topic> result = null;
+			String key = req.getParameter("key");
 			TopicAction func = new TopicAction();
-			result = func.getTopic(classId);
+			JSONObject jsonData;
+			if (! StringUtil.isBlank(key))
+			{
+				List<Topic> result = null;
+				
+				result = func.getTopicList(key);
 			
-			JSONObject jsonData = convertTopicList2JSON(result);
+				jsonData = convertTopicList2JSON(result);
+			} else
+			{
+				int topicId = Integer.parseInt(req.getParameter("topicId"));
+				Topic result = func.getTopic(topicId);
+				jsonData = convertTopic2JSON(result);
+			}
 			res.setStatus(ServletConstants.STATUS_CODE_OK);
 			output.println(jsonData.toString());
 		} catch(Exception e) {
@@ -86,6 +100,34 @@ public class TopicServlet extends HttpServlet{
 		} finally {
 			output.close();
 		}
+	}
+
+	private JSONObject convertTopic2JSON(Topic result) {
+		JSONObject res = new JSONObject();
+		JSONObject item = new JSONObject();
+		JSONArray replyList = new JSONArray();
+		JSONObject reply;
+		
+		item.accumulate("title", result.getTitle());
+		item.accumulate("description", result.getDescription());
+		item.accumulate("createTime", result.getCreateTime());
+			
+		for (Reply replyItem : result.getReplyList())
+		{
+			reply = new JSONObject();
+				
+			reply.accumulate("userId", replyItem.getUserId());
+			reply.accumulate("replyTime", replyItem.getReplyTime());
+			reply.accumulate("message", replyItem.getMessage());
+				
+			replyList.add(reply);
+		}
+		item.accumulate("replyList", replyList);
+		
+		res.accumulate("topic", item);
+		res.put(ServletConstants.HAS_ERROR, false);
+		
+		return res;
 	}
 
 	@Override
@@ -148,27 +190,13 @@ public class TopicServlet extends HttpServlet{
 		JSONObject res = new JSONObject();
 		JSONArray detail = new JSONArray();
 		JSONObject item;
-		JSONArray replyList;
-		JSONObject reply;
+		
 		for (Topic data : result)
 		{
 			item = new JSONObject();
-			replyList = new JSONArray();
 			item.accumulate("title", data.getTitle());
 			item.accumulate("description", data.getDescription());
 			item.accumulate("createTime", data.getCreateTime());
-			
-			for (Reply replyItem : data.getReplyList())
-			{
-				reply = new JSONObject();
-				
-				reply.accumulate("userId", replyItem.getUserId());
-				reply.accumulate("replyTime", replyItem.getReplyTime());
-				reply.accumulate("message", replyItem.getMessage());
-				
-				replyList.add(reply);
-			}
-			item.accumulate("replyList", replyList);
 			
 			detail.add(item);
 		}

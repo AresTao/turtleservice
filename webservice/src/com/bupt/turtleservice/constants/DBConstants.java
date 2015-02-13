@@ -1,7 +1,8 @@
 package com.bupt.turtleservice.constants;
 
 public class DBConstants {
-	public static final String DB_HOST = "10.109.247.80";
+	public static final String DB_HOST = "112.126.82.238";
+	//public static final String DB_HOST = "10.109.247.80";
 	public static final String DB_PORT = "3306";
 	public static final String DB_USER = "ztwu";
 	public static final String DB_PASS = "123";

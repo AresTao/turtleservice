@@ -16,11 +16,10 @@ public class AdminAction {
 	public AdminAction() throws TransactionException {
 		this.transactionOperation = new TransactionOperation();
 	}
-	public boolean registerAdmin(JSONObject jsonData) throws Exception
+	public boolean registerAdmin(String name, String passwd) throws Exception
 	{
 		AdminDBFunction func = new AdminDBFunction(this.transactionOperation);
-		String name = jsonData.getString("account");
-		String passwd = jsonData.getString("passwd");
+		
 		boolean res = func.registerAdmin(name, passwd);
 		return res;
 	}

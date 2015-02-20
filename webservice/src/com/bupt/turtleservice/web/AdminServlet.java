@@ -14,7 +14,8 @@ import org.apache.log4j.Logger;
 import com.bupt.turtleservice.action.AdminAction;
 import com.bupt.turtleservice.constants.ServletConstants;
 import com.bupt.turtleservice.utils.StreamUtil;
-
+import com.sohu.azure.rest.BladeRequestMapping;
+@BladeRequestMapping(path="/admin")
 public class AdminServlet extends HttpServlet{
 
 	/**
@@ -28,10 +29,12 @@ public class AdminServlet extends HttpServlet{
 	{
 		ServletOutputStream output = res.getOutputStream();
 		try {		
-			JSONObject jsonData = StreamUtil.getRequestJsonObject(req);
+			//JSONObject jsonData = StreamUtil.getRequestJsonObject(req);
+			String name = req.getParameter("account");
+			String passwd = req.getParameter("passwd");
 			
 			AdminAction action = new AdminAction();
-			boolean status = action.registerAdmin(jsonData);
+			boolean status = action.registerAdmin(name, passwd);
 			logger.info("register admin");
 			
 			if (status)

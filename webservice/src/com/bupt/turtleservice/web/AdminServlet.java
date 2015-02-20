@@ -31,14 +31,23 @@ public class AdminServlet extends HttpServlet{
 			JSONObject jsonData = StreamUtil.getRequestJsonObject(req);
 			
 			AdminAction action = new AdminAction();
-			action.registerAdmin(jsonData);
+			boolean status = action.registerAdmin(jsonData);
 			logger.info("register admin");
-						
-			JSONObject result = new JSONObject();
-			result.put(ServletConstants.HAS_ERROR, false);
-			res.setStatus(ServletConstants.STATUS_CODE_OK);
-			output.println(result.toString());
 			
+			if (status)
+			{
+				JSONObject result = new JSONObject();
+				result.put(ServletConstants.HAS_ERROR, false);
+				res.setStatus(ServletConstants.STATUS_CODE_OK);
+				output.println(result.toString());
+			} else {
+				JSONObject jsonResult = new JSONObject();
+				jsonResult.put(ServletConstants.HAS_ERROR, true);
+				jsonResult.put(ServletConstants.ERROR_MESSAGE, "Wrong name or passwd");
+				
+				res.setStatus(ServletConstants.STATUS_CODE_WRONG_PASSWD);
+				output.println(jsonResult.toString());
+			}
 		} catch(Exception e) {
 			JSONObject jsonResult = new JSONObject();
 			jsonResult.put(ServletConstants.HAS_ERROR, true);

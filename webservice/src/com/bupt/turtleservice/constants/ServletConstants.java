@@ -97,5 +97,6 @@ public class ServletConstants {
 	
 	// Return data related
 	public static final int STATUS_CODE_BAD_REQUEST = 400;
+	public static final int STATUS_CODE_WRONG_PASSWD = 403;
 	public static final int STATUS_CODE_OK = 200;
 }

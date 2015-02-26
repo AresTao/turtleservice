@@ -76,17 +76,17 @@
             </div>
             <div class="result-content">
                 <div class="short-wrap">
-                    <a class="add-btn" onclick="showAdd()"><i class="icon-font">&#xe001;</i>新增政策</a>
-                    <a class="select-btn" onclick="showSelect()"><i class="icon-font">&#xe005;</i>查询政策</a>
+                    <a class="add-btn" onclick="showSelect()"><i class="icon-font">&#xe005;</i>查询政策</a>
+                    <a class="select-btn" onclick="showAdd()"><i class="icon-font">&#xe001;</i>新增政策</a>
                 </div>
             </div>
         </div>
-        <div class="result-add" id="add">
+        <div class="result-add" style="display:none" id="add">
         	<div class="result-title">
                 <h1>新增政策</h1>
             </div>
             <div class="result-content">
-                <form action="/jscss/admin/design/add" method="post" id="myform" name="myform" enctype="multipart/form-data">
+                <form action="/turtle/policy" method="post" id="myform" name="myform" enctype="multipart/form-data">
                     <table class="insert-tab" width="100%">
                         <tbody>
                         	<tr>
@@ -94,7 +94,7 @@
                            		<td>
                                 	<select name="colId" id="catid" class="required">
                                     	<option value="">请选择</option>
-                                    	<option value="1">落户</option><option value="2">购车</option>
+                                    	<option value="card">落户</option><option value="car">购车</option>
                                 	</select>
                             	</td>
                         	</tr>
@@ -105,8 +105,8 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>作者：</th>
-                                <td><input class="common-text" name="author" size="50" value="admin" type="text"></td>
+                                <th>备注：</th>
+                                <td><input class="common-text" name="comment" size="50" value="" type="text"></td>
                             </tr>
                             <tr>
                                 <th><i class="require-red">*</i>内容：</th>
@@ -124,32 +124,31 @@
                 </form>
             </div>
         </div>    
-        <div class="result-select" style="display:none" id="select">
+        <div class="result-select" id="select">
             <div class="result-title">
                 <h1>查询政策</h1>
             </div>
             <div class="search-wrap">
             <div class="search-content">
-                <form action="#" method="post">
-                    <table class="search-tab">
+                <div class="search-form">
+                    <table id="search-tab">
                         <tr>
                             <th width="120">选择分类:</th>
                             <td>
-                                <select name="search-sort" id="">
+                                <select name="topic" id="selectController">
                                     <option value="">全部</option>
-                                    <option value="1">落户</option><option value="2">购车</option>
+                                    <option value="card">落户</option><option value="car">购车</option>
                                 </select>
                             </td>
                             <th width="70">关键字:</th>
-                            <td><input class="common-text" placeholder="关键字" name="keywords" value="" id="" type="text"></td>
-                            <td><input class="btn btn-primary btn2" name="sub" value="查询" type="submit"></td>
+                            <td><input class="common-text" placeholder="关键字" name="key" value="" id="" type="text"></td>
+                            <td><input class="btn btn-primary btn2" name="sub" value="查询" type="submit" onclick="searchPolicy()"></td>
                         </tr>
                     </table>
-                </form>
+                </div>
             </div>
         	</div>
             <div class="result-form">
-            <form name="myform" id="myform" method="post">
                 <div class="result-title">
                     <div class="result-list">
                         <a id="batchDel" href="javascript:void(0)"><i class="icon-font"></i>批量删除</a>
@@ -157,68 +156,33 @@
                     </div>
                 </div>
                 <div class="result-content">
-                    <table class="result-tab" width="100%">
+                    <table id="result-tab" width="100%" class="result-tab">
                         <tr>
                             <th class="tc" width="5%"><input class="allChoose" name="" type="checkbox"></th>
                             <th>排序</th>
                             <th>ID</th>
                             <th>标题</th>
                             <th>审核状态</th>
-                            <th>点击</th>
-                            <th>发布人</th>
-                            <th>更新时间</th>
                             <th>评论</th>
                             <th>操作</th>
                         </tr>
-                        <tr>
-                            <td class="tc"><input name="id[]" value="59" type="checkbox"></td>
-                            <td>
-                                <input name="ids[]" value="59" type="hidden">
-                                <input class="common-input sort-input" name="ord[]" value="0" type="text">
-                            </td>
-                            <td>59</td>
-                            <td title="发哥经典"><a target="_blank" href="#" title="发哥经典">发哥经典</a> …
-                            </td>
-                            <td>0</td>
-                            <td>2</td>
-                            <td>admin</td>
-                            <td>2014-03-15 21:11:01</td>
-                            <td></td>
-                            <td>
-                                <a class="link-update" href="#">修改</a>
-                                <a class="link-del" href="#">删除</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="tc"><input name="id[]" value="58" type="checkbox"></td>
-                            <td>
-                                <input name="ids[]" value="58" type="hidden">
-                                <input class="common-input sort-input" name="ord[]" value="0" type="text">
-                            </td>
-                            <td>58</td>
-                            <td title="黑色经典"><a target="_blank" href="#" title="黑色经典">黑色经典</a> …
-                            </td>
-                            <td>0</td>
-                            <td>35</td>
-                            <td>admin</td>
-                            <td>2013-12-30 22:34:00</td>
-                            <td></td>
-                            <td>
-                                <a class="link-update" href="#">修改</a>
-                                <a class="link-del" href="#">删除</a>
-                            </td>
-                        </tr>
                     </table>
-                    <div class="list-page"> 2 条 1/1 页</div>
                 </div>
-            </form>
             </div>
         </div>
     </div>
     <!--/main-->
 </div>
 
+<script src="./js/jquery-1.8.3.min.js"></script>
+<script src="./js/jquery-1.8.3.js"></script>
+        <!-- endbuild -->
 
+        <!-- build:js(.tmp) /js/index/vendor-bs.min.js -->
+<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+        <!-- endbuild -->
+
+<script src="./js/common.js"></script>
+<script src="./js/md5.js"></script>
 </body>
-
 </html>

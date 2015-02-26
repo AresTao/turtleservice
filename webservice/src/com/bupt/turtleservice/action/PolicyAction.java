@@ -22,27 +22,18 @@ public class PolicyAction {
 		this.transactionOperation = new TransactionOperation();
 	}
 	
-	public boolean createPolicy(JSONObject jsonData) throws Exception
+	public boolean createPolicy(String title, String topic, String content, String comment) throws Exception
 	{
 		PolicyDBFunction func = new PolicyDBFunction(this.transactionOperation);
-		String name = jsonData.getString("name");
-		String content = jsonData.getString("content");
-		String topic = jsonData.getString("topic");
-		String createTime = jsonData.getString("createTime");
-		String comment = jsonData.getString("comment");
-		func.createPolicy(name, content, topic, createTime, comment);
+		func.createPolicy(title, content, topic, comment);
 		return true;
 	}
 	
-	public boolean updatePolicy(JSONObject jsonData) throws Exception
+	public boolean updatePolicy(int policyId,  String title, String topic, String content, String comment) throws Exception
 	{
 		PolicyDBFunction func = new PolicyDBFunction(this.transactionOperation);
-		String name = jsonData.getString("name");
-		String content = jsonData.getString("content");
-		String topic = jsonData.getString("topic");
-		String policyId = jsonData.getString("policyId");
 		
-		func.updatePolicy(policyId, name, content, topic);
+		func.updatePolicy(policyId, title, topic, content, comment);
 		return true;
 	}
 	

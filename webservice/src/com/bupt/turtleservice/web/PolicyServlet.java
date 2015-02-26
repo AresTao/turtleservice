@@ -17,6 +17,7 @@ import com.bupt.turtleservice.action.PolicyAction;
 import com.bupt.turtleservice.constants.ServletConstants;
 import com.bupt.turtleservice.model.Policy;
 import com.bupt.turtleservice.utils.StreamUtil;
+import com.bupt.turtleservice.utils.StringUtil;
 import com.sohu.azure.rest.BladeRequestMapping;
 @BladeRequestMapping(path="/policy")
 public class PolicyServlet extends HttpServlet{
@@ -30,13 +31,25 @@ public class PolicyServlet extends HttpServlet{
 	 * create policy
 	 * */
 	@Override
-	protected void doPut(HttpServletRequest req, HttpServletResponse res) throws IOException
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException
 	{
 		ServletOutputStream output = res.getOutputStream();
 		try {		
-			JSONObject jsonData = StreamUtil.getRequestJsonObject(req);
+			String title = req.getParameter("title");
+			String topic = req.getParameter("colId");
+			String content = req.getParameter("content");
+			String comment = req.getParameter("comment");
+			String id = req.getParameter("id");
+			
 			PolicyAction action = new PolicyAction();
-			action.createPolicy(jsonData);
+			if(StringUtil.isBlank(id))
+			{
+				action.createPolicy(title, content, topic, comment);
+			}else
+			{
+				int policyId = Integer.parseInt(id);
+				action.updatePolicy(policyId, title, content, topic, comment);
+			}
 			
 			logger.info("create policy");
 			
@@ -97,34 +110,6 @@ public class PolicyServlet extends HttpServlet{
 			action.deletePolicy(jsonData);
 			
 			logger.info("delete policy");
-			
-			JSONObject result = new JSONObject();
-			result.put(ServletConstants.HAS_ERROR, false);
-			res.setStatus(ServletConstants.STATUS_CODE_OK);
-			output.println(result.toString());
-			
-		} catch(Exception e) {
-			JSONObject jsonResult = new JSONObject();
-			jsonResult.put(ServletConstants.HAS_ERROR, true);
-			jsonResult.put(ServletConstants.ERROR_MESSAGE, e.getMessage());
-			
-			res.setStatus(ServletConstants.STATUS_CODE_BAD_REQUEST);
-			output.println(jsonResult.toString());
-		} finally {
-			output.close();
-		}
-	}
-	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException
-	{
-		ServletOutputStream output = res.getOutputStream();
-		try {		
-			JSONObject jsonData = StreamUtil.getRequestJsonObject(req);
-			PolicyAction action = new PolicyAction();
-			action.updatePolicy(jsonData);
-			
-			logger.info("update policy");
 			
 			JSONObject result = new JSONObject();
 			result.put(ServletConstants.HAS_ERROR, false);

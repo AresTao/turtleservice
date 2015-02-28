@@ -77,6 +77,7 @@ public class PolicyDBFunction {
 			{
 				Policy item = new Policy();
 				System.out.println(res.getString("content"));
+				item.setId(res.getInt("id"));
 				item.setContent(res.getString("content"));
 				item.setCreateTime(res.getString("create_time"));
 				item.setName(res.getString("name"));

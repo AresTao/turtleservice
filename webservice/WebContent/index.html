@@ -86,7 +86,7 @@
                 <h1>新增政策</h1>
             </div>
             <div class="result-content">
-                <form action="/turtle/policy" method="post" id="myform" name="myform" enctype="multipart/form-data">
+                <div id="addForm">
                     <table class="insert-tab" width="100%">
                         <tbody>
                         	<tr>
@@ -115,13 +115,53 @@
                             <tr>
                                 <th></th>
                                 <td>
-                                    <input class="btn btn-primary btn6 mr10" value="提交" type="submit">
+                                    <input class="btn btn-primary btn6 mr10" value="提交" onclick="createPolicy()">
                                     <input class="btn btn6" onclick="history.go(-1)" value="取消" type="button">
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                </form>
+                </div>
+            </div>
+        </div>
+        <div class="result-update" style="display:none" id="update">
+        	<div class="result-title">
+                <h1>修改政策</h1>
+            </div>
+            <div class="result-content">
+                <div id="updateForm">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                        	<tr>
+                                <th>ID：</th>
+                                <td>
+                                    <input class="common-text required" id="policyID" size="50" value="" type="text">
+                                </td>
+                            </tr>
+                        	<tr>
+                                <th><i class="require-red">*</i>标题：</th>
+                                <td>
+                                    <input class="common-text required" id="title" name="title" size="50" value="" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>备注：</th>
+                                <td><input class="common-text" name="comment" size="50" value="" type="text"></td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>内容：</th>
+                                <td><textarea name="content" class="common-textarea" id="content" cols="30" style="width: 98%;" rows="10"></textarea></td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input class="btn btn-primary btn6 mr10" value="提交" onclick="updatePolicy()">
+                                    <input class="btn btn6" onclick="history.go(-1)" value="取消" type="button">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>    
         <div class="result-select" id="select">

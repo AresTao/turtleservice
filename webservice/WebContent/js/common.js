@@ -77,6 +77,8 @@ function createXHR() {
             url      : url + "?topic=" + topic + "&key=" + key,
             success  : function(res){
                 var dataItems = res.policyList;
+                var tableOld = document.getElementById("result-tab");
+                tableOld.firstChild.removeNode(true);
                 for(var i=0; i<dataItems.length; i++)
                 {
                     var item = dataItems[i];
@@ -96,4 +98,14 @@ function createXHR() {
                 }
             }
         });
+    }
+
+    function updatePolicy()
+    {
+
+    }
+
+    function createPolicy()
+    {
+
     }

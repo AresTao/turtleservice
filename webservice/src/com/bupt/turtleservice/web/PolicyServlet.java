@@ -136,7 +136,7 @@ public class PolicyServlet extends HttpServlet{
 		for (Policy data : result)
 		{
 			item = new JSONObject();
-			
+			item.accumulate("id", data.getId());
 			item.accumulate("policyName", data.getName());
 			item.accumulate("content", data.getContent());
 			item.accumulate("createTime", data.getCreateTime());

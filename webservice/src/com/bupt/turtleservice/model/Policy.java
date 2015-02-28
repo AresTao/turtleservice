@@ -2,6 +2,7 @@ package com.bupt.turtleservice.model;
 
 public class Policy {
 
+	private int id;
 	private String name = "";
 	private String content = "";
 	private String topic = "";
@@ -30,5 +31,11 @@ public class Policy {
 	}
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 }

@@ -15,7 +15,6 @@ public class CommonListener implements ServletContextListener
     private final static String ROOT_CONFIG_PATH = "rootConfigPath";
     private final static String LOG4J_FILE_NAME = "log4j.properties";
 
-    @Override
     public void contextInitialized(ServletContextEvent arg0)
     {
         String webPath = arg0.getServletContext().getRealPath("/");
@@ -26,7 +25,6 @@ public class CommonListener implements ServletContextListener
         logger.info("service start");
     }
 
-    @Override
     public void contextDestroyed(ServletContextEvent arg0)
     {
     }

@@ -90,11 +90,11 @@ function createXHR() {
                     //var idCell = tabRow.insertCell(1);
                     //idCell.value = item.id;
                     var titleCell = tabRow.insertCell(1);
-                    titleCell.innerHTML = "<a onclick='updatePolicy()' >"+item.policyName+"</a>";
+                    titleCell.innerHTML = "<a onclick='showUpdate()' >"+item.policyName+"</a>";
                     var contentCell = tabRow.insertCell(2);
-                    contentCell.innerHTML = "<a onclick='updatePolicy()' >"+item.content+"</a>";
+                    contentCell.innerHTML = "<a onclick='showUpdate()' >"+item.content+"</a>";
                     var operationCell = tabRow.insertCell(3);
-                    operationCell.innerHTML = "<a class='link-update' onclick='updatePolicy()' width='%5'>修改&nbsp</a>" + "<a class='link-del' onclick='deletePolicy()'>删除</a>";
+                    operationCell.innerHTML = "<a class='link-update' onclick='showUpdate()' width='%5' id='modify"+item.id+"' >修改&nbsp</a>" + "<a class='link-del' onclick='deletePolicy()' id='delete"+item.id+"'>删除</a>";
                 }
             }
         });
@@ -103,9 +103,43 @@ function createXHR() {
     function updatePolicy()
     {
 
+    	var updateTable = document.getElementById("update-tab");
+        var title = insertTable.rows[0].cells[3].getElementsByTagName("input")[0].value;
+        var comment = insertTable.rows[0].cells[5].getElementsByTagName("input")[0].value;
+        var content = insertTable.rows[0].cells[7].getElementsByTagName("textarea")[0].value;
+        var url = "http://"+document.location.host+"/turtle/policy";
+        $.ajax({
+            type     : "POST",
+            cache    : false,
+            async    : false,
+            dataType : "json",
+            data     : "title="+title+"&colId="+topic+"&comment="+comment+"&content="+content;
+            url      : url,
+            success  : function(res){
+                alert("create success");
+            }
+        });
     }
 
     function createPolicy()
     {
 
+    	var insertTable = document.getElementById("insert-tab");
+        var t = document.getElementById("addSelect");
+        var topic = t.options[t.selectedIndex].value;
+        var title = insertTable.rows[0].cells[3].getElementsByTagName("input")[0].value;
+        var comment = insertTable.rows[0].cells[5].getElementsByTagName("input")[0].value;
+        var content = insertTable.rows[0].cells[7].getElementsByTagName("textarea")[0].value;
+        var url = "http://"+document.location.host+"/turtle/policy";
+        $.ajax({
+            type     : "POST",
+            cache    : false,
+            async    : false,
+            dataType : "json",
+            data     : "title="+title+"&colId="+topic+"&comment="+comment+"&content="+content;
+            url      : url,
+            success  : function(res){
+                alert("create success");
+            }
+        });
     }

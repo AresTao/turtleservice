@@ -11,13 +11,22 @@
 	function showAdd()
 	{
 		document.getElementById("select").style.display="none";
+		document.getElementById("update").style.display="none";
 		document.getElementById("add").style.display="";
 	}
 
 	function showSelect()
 	{
 		document.getElementById("add").style.display="none";
+		document.getElementById("update").style.display="none";
 		document.getElementById("select").style.display="";
+	}
+	
+	function showUpdate()
+	{
+		document.getElementById("select").style.display="none";
+		document.getElementById("add").style.display="none";
+		document.getElementById("update").style.display="";
 	}
 </script>
 <body>
@@ -48,21 +57,21 @@
                 <li>
                     <a href="#"><i class="icon-font">&#xe003;</i>常用操作</a>
                     <ul class="sub-menu">
-                        <li><a href="design.html"><i class="icon-font">&#xe008;</i>政策管理</a></li>
-                        <li><a href="design.html"><i class="icon-font">&#xe005;</i>论坛管理</a></li>
-                        <li><a href="design.html"><i class="icon-font">&#xe006;</i>分类管理</a></li>
-                        <li><a href="design.html"><i class="icon-font">&#xe012;</i>评论管理</a></li>
-                        <li><a href="design.html"><i class="icon-font">&#xe052;</i>友情链接</a></li>
-                        <li><a href="design.html"><i class="icon-font">&#xe033;</i>广告管理</a></li>
+                        <li><a href="#"><i class="icon-font">&#xe008;</i>政策管理</a></li>
+                        <li><a href="#"><i class="icon-font">&#xe005;</i>论坛管理</a></li>
+                        <li><a href="#"><i class="icon-font">&#xe006;</i>分类管理</a></li>
+                        <li><a href="#"><i class="icon-font">&#xe012;</i>评论管理</a></li>
+                        <li><a href="#"><i class="icon-font">&#xe052;</i>友情链接</a></li>
+                        <li><a href="#"><i class="icon-font">&#xe033;</i>广告管理</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="#"><i class="icon-font">&#xe018;</i>系统管理</a>
                     <ul class="sub-menu">
-                        <li><a href="system.html"><i class="icon-font">&#xe017;</i>系统设置</a></li>
-                        <li><a href="system.html"><i class="icon-font">&#xe037;</i>清理缓存</a></li>
-                        <li><a href="system.html"><i class="icon-font">&#xe046;</i>数据备份</a></li>
-                        <li><a href="system.html"><i class="icon-font">&#xe045;</i>数据还原</a></li>
+                        <li><a href="#"><i class="icon-font">&#xe017;</i>系统设置</a></li>
+                        <li><a href="#"><i class="icon-font">&#xe037;</i>清理缓存</a></li>
+                        <li><a href="#"><i class="icon-font">&#xe046;</i>数据备份</a></li>
+                        <li><a href="#"><i class="icon-font">&#xe045;</i>数据还原</a></li>
                     </ul>
                 </li>
             </ul>
@@ -87,12 +96,12 @@
             </div>
             <div class="result-content">
                 <div id="addForm">
-                    <table class="insert-tab" width="100%">
+                    <table class="insert-tab" id="insert-tab" width="100%">
                         <tbody>
                         	<tr>
                             	<th width="120"><i class="require-red">*</i>分类：</th>
                            		<td>
-                                	<select name="colId" id="catid" class="required">
+                                	<select name="colId" id="addSelect" class="required">
                                     	<option value="">请选择</option>
                                     	<option value="card">落户</option><option value="car">购车</option>
                                 	</select>
@@ -130,7 +139,7 @@
             </div>
             <div class="result-content">
                 <div id="updateForm">
-                    <table class="insert-tab" width="100%">
+                    <table class="insert-tab" id="update-tab" width="100%">
                         <tbody>
                         	<tr>
                                 <th>ID：</th>

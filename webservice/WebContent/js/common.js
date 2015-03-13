@@ -84,6 +84,7 @@ function createXHR() {
                     var item = dataItems[i];
                     var table = document.getElementById("result-tab");
                     var tabRow = table.insertRow(i+1);
+                    tabRow.setAttribute("id", "item"+i);
                     var checkCell = tabRow.insertCell(0);
                     checkCell.innerHTML = "<input class='tc' name='id[]' value='' type='checkbox'>";
                     //checkCell.value = item.id;
@@ -94,7 +95,7 @@ function createXHR() {
                     var contentCell = tabRow.insertCell(3);
                     contentCell.innerHTML = "<a onclick='showUpdate()' >"+item.content+"</a>";
                     var operationCell = tabRow.insertCell(4);
-                    operationCell.innerHTML = "<a class='link-update' onclick='showUpdate()' width='%5' id='modify"+item.id+"' >修改&nbsp</a>" + "<a class='link-del' onclick='deletePolicy()' id='delete"+item.id+"'>删除</a>";
+                    operationCell.innerHTML = "<a class='link-update' onclick='showUpdate(this.id)' width='%5' id='modify"+i+"' >修改&nbsp</a>" + "<a class='link-del' onclick='deletePolicy()' id='delete"+item.id+"'>删除</a>";
                 }
             }
         });

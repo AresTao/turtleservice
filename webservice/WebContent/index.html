@@ -22,8 +22,19 @@
 		document.getElementById("select").style.display="";
 	}
 	
-	function showUpdate()
+	function showUpdate(id)
 	{
+		var index = id.substr("modify".length);
+		
+		var updateTable = document.getElementById("update-tab");
+		var row = document.getElementById("item"+index);
+		
+		updateTable.rows[0].cells[1].children[0].innerHTML = row.children[1].children[0].innerHTML;
+		
+		updateTable.rows[1].cells[1].children[0].value = row.children[2].children[0].innerHTML;
+		//updateTable.rows[2].cells[1].children[0].value = row.children[3].children[0].innerHTML;
+		updateTable.rows[3].cells[1].children[0].value = row.children[2].children[0].innerHTML;
+		
 		document.getElementById("select").style.display="none";
 		document.getElementById("add").style.display="none";
 		document.getElementById("update").style.display="";
@@ -144,7 +155,7 @@
                         	<tr>
                                 <th>ID：</th>
                                 <td>
-                                    <a id="policyID" size="50" value=""></a>
+                                    <a id="updatePolicyID" size="50" value=""></a>
                                 </td>
                             </tr>
                         	<tr>

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>海龟后台管理</title>
-    <link rel="stylesheet" type="text/css" href="./css/common.css"/>
-    <link rel="stylesheet" type="text/css" href="./css/main.css"/>
-    <script type="text/javascript" src="./js/libs/modernizr.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <script type="text/javascript" src="js/libs/modernizr.min.js"></script>
 </head>
 <script language="JavaScript">
 	function showAdd()
@@ -144,7 +144,7 @@
                         	<tr>
                                 <th>ID：</th>
                                 <td>
-                                    <input class="common-text required" id="policyID" size="50" value="" type="text">
+                                    <a id="policyID" size="50" value=""></a>
                                 </td>
                             </tr>
                         	<tr>
@@ -208,11 +208,9 @@
                     <table id="result-tab" width="100%" class="result-tab">
                         <tr>
                             <th class="tc" width="5%"><input class="allChoose" name="" type="checkbox"></th>
-                            <th>排序</th>
                             <th>ID</th>
                             <th>标题</th>
-                            <th>审核状态</th>
-                            <th>评论</th>
+                            <th>内容</th>
                             <th>操作</th>
                         </tr>
                     </table>
@@ -223,15 +221,15 @@
     <!--/main-->
 </div>
 
-<script src="./js/jquery-1.8.3.min.js"></script>
-<script src="./js/jquery-1.8.3.js"></script>
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery-1.8.3.js"></script>
         <!-- endbuild -->
 
         <!-- build:js(.tmp) /js/index/vendor-bs.min.js -->
-<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
         <!-- endbuild -->
 
-<script src="./js/common.js"></script>
-<script src="./js/md5.js"></script>
+<script src="js/common.js"></script>
+<script src="js/md5.js"></script>
 </body>
 </html>

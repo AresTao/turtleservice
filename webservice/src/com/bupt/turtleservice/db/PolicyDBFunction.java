@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.bupt.turtleservice.model.Policy;
+import com.bupt.turtleservice.utils.DateUtil;
 
 public class PolicyDBFunction {
 
@@ -36,8 +37,8 @@ public class PolicyDBFunction {
 		List<Object> values = new ArrayList<Object>();
 		values.add(title);
 		values.add(content);
-		values.add(title);
-		values.add(new Date().toString());
+		values.add(topic);
+		values.add(DateUtil.getDatetime(new Date()));
 		values.add(comment);
 		
 		this.transactionOperation.beginTransaction();
@@ -62,10 +63,11 @@ public class PolicyDBFunction {
 		return true;
 	}
 	
-	public List<Policy> getPolicy(String key)
+	public List<Policy> getPolicy(String key, String topic)
 	{
-		String sql = "SELECT * FROM `policy` where `topic` = ? ;";
+		String sql = "SELECT * FROM `policy` where `topic` = ? and `name` like ?;";
 		List<Object> values = new ArrayList<Object>();
+		values.add(topic);
 		values.add(key);
 		
 		List<Policy> result = null;

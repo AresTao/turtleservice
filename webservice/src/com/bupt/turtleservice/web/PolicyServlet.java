@@ -81,9 +81,10 @@ public class PolicyServlet extends HttpServlet{
 		ServletOutputStream output = res.getOutputStream();
 		try {
 			String key = req.getParameter("key");
+			String topic =req.getParameter("topic");
 			List<Policy> result = null;
 			PolicyAction func = new PolicyAction();
-			result = func.getPolicy(key);
+			result = func.getPolicy(key,topic);
 			
 			JSONObject jsonData = convertPolicyList2JSON(result);
 			res.setStatus(ServletConstants.STATUS_CODE_OK);

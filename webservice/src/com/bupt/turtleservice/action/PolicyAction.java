@@ -22,7 +22,7 @@ public class PolicyAction {
 		this.transactionOperation = new TransactionOperation();
 	}
 	
-	public boolean createPolicy(String title, String topic, String content, String comment) throws Exception
+	public boolean createPolicy(String title, String content, String topic, String comment) throws Exception
 	{
 		PolicyDBFunction func = new PolicyDBFunction(this.transactionOperation);
 		func.createPolicy(title, content, topic, comment);
@@ -45,10 +45,10 @@ public class PolicyAction {
 		return true;
 	}
 	
-	public List<Policy> getPolicy(String key)
+	public List<Policy> getPolicy(String key, String topic)
 	{
 		PolicyDBFunction func = new PolicyDBFunction(this.transactionOperation);
-		List<Policy> res = func.getPolicy(key);
+		List<Policy> res = func.getPolicy(key, topic);
 		return res;
 	}
 	
@@ -65,7 +65,7 @@ public class PolicyAction {
 		System.out.println(jsonData.toString());
 		//action.createPolicy(jsonData);
 		
-		List<Policy> res = action.getPolicy("test");
+		List<Policy> res = action.getPolicy("test","test");
 		for (Policy item : res)
 		{
 			System.out.println(item.getContent());

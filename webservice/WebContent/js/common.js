@@ -77,8 +77,8 @@ function createXHR() {
             url      : url + "?topic=" + topic + "&key=" + key,
             success  : function(res){
                 var dataItems = res.policyList;
-                var tableOld = document.getElementById("result-tab");
-                tableOld.firstChild.removeNode(true);
+                //var tableOld = document.getElementById("result-tab");
+                //tableOld.firstChild.removeNode(true);
                 for(var i=0; i<dataItems.length; i++)
                 {
                     var item = dataItems[i];
@@ -87,13 +87,13 @@ function createXHR() {
                     var checkCell = tabRow.insertCell(0);
                     checkCell.innerHTML = "<input class='tc' name='id[]' value='' type='checkbox'>";
                     //checkCell.value = item.id;
-                    //var idCell = tabRow.insertCell(1);
-                    //idCell.value = item.id;
-                    var titleCell = tabRow.insertCell(1);
+                    var idCell = tabRow.insertCell(1);
+                    idCell.innerHTML = "<a onclick='showUpdate()'>" +item.id+"</a>";
+                    var titleCell = tabRow.insertCell(2);
                     titleCell.innerHTML = "<a onclick='showUpdate()' >"+item.policyName+"</a>";
-                    var contentCell = tabRow.insertCell(2);
+                    var contentCell = tabRow.insertCell(3);
                     contentCell.innerHTML = "<a onclick='showUpdate()' >"+item.content+"</a>";
-                    var operationCell = tabRow.insertCell(3);
+                    var operationCell = tabRow.insertCell(4);
                     operationCell.innerHTML = "<a class='link-update' onclick='showUpdate()' width='%5' id='modify"+item.id+"' >修改&nbsp</a>" + "<a class='link-del' onclick='deletePolicy()' id='delete"+item.id+"'>删除</a>";
                 }
             }
@@ -113,7 +113,7 @@ function createXHR() {
             cache    : false,
             async    : false,
             dataType : "json",
-            data     : "title="+title+"&colId="+topic+"&comment="+comment+"&content="+content;
+            data     : "title="+title+"&colId="+topic+"&comment="+comment+"&content="+content,
             url      : url,
             success  : function(res){
                 alert("create success");
@@ -127,16 +127,16 @@ function createXHR() {
     	var insertTable = document.getElementById("insert-tab");
         var t = document.getElementById("addSelect");
         var topic = t.options[t.selectedIndex].value;
-        var title = insertTable.rows[0].cells[3].getElementsByTagName("input")[0].value;
-        var comment = insertTable.rows[0].cells[5].getElementsByTagName("input")[0].value;
-        var content = insertTable.rows[0].cells[7].getElementsByTagName("textarea")[0].value;
+        var title = insertTable.rows[1].cells[1].getElementsByTagName("input")[0].value;
+        var comment = insertTable.rows[2].cells[1].getElementsByTagName("input")[0].value;
+        var content = insertTable.rows[3].cells[1].getElementsByTagName("textarea")[0].value;
         var url = "http://"+document.location.host+"/turtle/policy";
         $.ajax({
             type     : "POST",
             cache    : false,
             async    : false,
             dataType : "json",
-            data     : "title="+title+"&colId="+topic+"&comment="+comment+"&content="+content;
+            data     : "title="+title+"&colId="+topic+"&comment="+comment+"&content="+content,
             url      : url,
             success  : function(res){
                 alert("create success");

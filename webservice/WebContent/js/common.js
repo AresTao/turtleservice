@@ -27,40 +27,40 @@
 		
 	}
 
-function createXHR() {
+    function createXHR() {
 
     // Checks whether support XMLHttpRequest or not.
-    if (typeof XMLHttpRequest != "undefined") {
-        return new XMLHttpRequest();
-    }
+    	if (typeof XMLHttpRequest != "undefined") {
+    		return new XMLHttpRequest();
+    	}
 
     // IE6 and elder version.
-    else if (typeof ActiveXObject != "undefined") {
-        if (typeof arguments.callee.activeXString != "string") {
-            var versions = [
-        "MSXML2.XMLHttp6.0",
-        "MSXML2.XMLHttp3.0",
-        "MSXML2.XMLHttp"];
+    	else if (typeof ActiveXObject != "undefined") {
+    		if (typeof arguments.callee.activeXString != "string") {
+    			var versions = [
+    			                "MSXML2.XMLHttp6.0",
+    			                "MSXML2.XMLHttp3.0",
+    			                "MSXML2.XMLHttp"];
 
-            for (var i = 0; i < versions.length; i++) {
-                try {
-                    var xhr = new ActiveXObject(versions[i]);
-                    arguments.callee.activeXString = versions[i];
-                    return xhr;
-                }
-                catch (ex) {
-                    throw new Error(ex.toString());
-                }
-            }
-            return new ActiveXObject(arguments.callee.activeXString);
-        }
-        else {
-            throw new Error("No XHR object available");
-        }
+    			for (var i = 0; i < versions.length; i++) {
+    				try {
+    					var xhr = new ActiveXObject(versions[i]);
+    					arguments.callee.activeXString = versions[i];
+    					return xhr;
+    				}
+    				catch (ex) {
+    					throw new Error(ex.toString());
+    				}
+    			}
+    			return new ActiveXObject(arguments.callee.activeXString);
+    		}
+    		else {
+    			throw new Error("No XHR object available");
+    		}
 
+    	}
+    	return null;
     }
-    return null;
-}
 
     function searchPolicy()
     {
@@ -105,19 +105,22 @@ function createXHR() {
     {
 
     	var updateTable = document.getElementById("update-tab");
-        var title = insertTable.rows[0].cells[3].getElementsByTagName("input")[0].value;
-        var comment = insertTable.rows[0].cells[5].getElementsByTagName("input")[0].value;
-        var content = insertTable.rows[0].cells[7].getElementsByTagName("textarea")[0].value;
+    	var title = updateTable.rows[0].cells[1].children[0].innerHTML;
+		
+		var comment = updateTable.rows[1].cells[1].children[0].value;
+		
+		var content = updateTable.rows[3].cells[1].children[0].value;
+        
         var url = "http://"+document.location.host+"/turtle/policy";
         $.ajax({
             type     : "POST",
             cache    : false,
             async    : false,
             dataType : "json",
-            data     : "title="+title+"&colId="+topic+"&comment="+comment+"&content="+content,
+            data     : "title="+title+"&comment="+comment+"&content="+content,
             url      : url,
             success  : function(res){
-                alert("create success");
+                alert("update success");
             }
         });
     }
@@ -144,3 +147,35 @@ function createXHR() {
             }
         });
     }
+    
+    function showAdd()
+	{
+		document.getElementById("select").style.display="none";
+		document.getElementById("update").style.display="none";
+		document.getElementById("add").style.display="";
+	}
+
+	function showSelect()
+	{
+		document.getElementById("add").style.display="none";
+		document.getElementById("update").style.display="none";
+		document.getElementById("select").style.display="";
+	}
+	
+	function showUpdate(id)
+	{
+		var index = id.substr("modify".length);
+		
+		var updateTable = document.getElementById("update-tab");
+		var row = document.getElementById("item"+index);
+		
+		updateTable.rows[0].cells[1].children[0].innerHTML = row.children[1].children[0].innerHTML;
+		
+		updateTable.rows[1].cells[1].children[0].value = row.children[2].children[0].innerHTML;
+		//updateTable.rows[2].cells[1].children[0].value = row.children[3].children[0].innerHTML;
+		updateTable.rows[3].cells[1].children[0].value = row.children[2].children[0].innerHTML;
+		
+		document.getElementById("select").style.display="none";
+		document.getElementById("add").style.display="none";
+		document.getElementById("update").style.display="";
+	}

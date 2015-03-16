@@ -2,12 +2,14 @@ package com.bupt.turtleservice.db;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.bupt.turtleservice.model.Reply;
 import com.bupt.turtleservice.model.Topic;
+import com.bupt.turtleservice.utils.DateUtil;
 
 public class TopicDBFunction {
 
@@ -18,7 +20,7 @@ public class TopicDBFunction {
 		this.transactionOperation = transactionOperation;
 	}
 	
-	public boolean createTopic(String classId, String title, String userId, String description, String dateTime) throws Exception
+	public boolean createTopic(int classId, String title, int userId, String description) throws Exception
 	{
 		String sql = "INSERT INTO `topic` (`classId`, `title`, `userId`, `description`, `dateTime`) VALUES (?,?,?,?,?);";
 		List<Object> values = new ArrayList<Object>();
@@ -26,7 +28,7 @@ public class TopicDBFunction {
 		values.add(title);
 		values.add(userId);
 		values.add(description);
-		values.add(dateTime);
+		values.add(DateUtil.getDatetime(new Date()));
 		
 		this.transactionOperation.beginTransaction();
 		ResultSet res = this.transactionOperation.exec(sql, values);

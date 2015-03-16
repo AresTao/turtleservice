@@ -29,35 +29,7 @@ public class TopicServlet extends HttpServlet{
 	 * 
 	 */
 	private static final long serialVersionUID = 1664605870231208581L;
-	private static Logger logger = Logger.getLogger(RegisterUserServlet.class);
-	
-	@Override
-	protected void doPut(HttpServletRequest req, HttpServletResponse res) throws IOException
-	{
-		ServletOutputStream output = res.getOutputStream();
-		try {		
-			JSONObject jsonData = StreamUtil.getRequestJsonObject(req);
-			TopicAction action = new TopicAction();
-			action.createTopic(jsonData);
-			
-			logger.info("create topic");
-			
-			JSONObject result = new JSONObject();
-			result.put(ServletConstants.HAS_ERROR, false);
-			res.setStatus(ServletConstants.STATUS_CODE_OK);
-			output.println(result.toString());
-			
-		} catch(Exception e) {
-			JSONObject jsonResult = new JSONObject();
-			jsonResult.put(ServletConstants.HAS_ERROR, true);
-			jsonResult.put(ServletConstants.ERROR_MESSAGE, e.getMessage());
-			
-			res.setStatus(ServletConstants.STATUS_CODE_BAD_REQUEST);
-			output.println(jsonResult.toString());
-		} finally {
-			output.close();
-		}
-	}
+	private static Logger logger = Logger.getLogger(TopicServlet.class);
 	
 	/*
 	 * get /topic?key=XXXXXXX
@@ -72,10 +44,11 @@ public class TopicServlet extends HttpServlet{
 	{
 		ServletOutputStream output = res.getOutputStream();
 		try {
+			String classId = req.getParameter("classId");
 			String key = req.getParameter("key");
 			TopicAction func = new TopicAction();
 			JSONObject jsonData;
-			if (! StringUtil.isBlank(key))
+			if (! StringUtil.isBlank(key) && ! StringUtil.isBlank(classId))
 			{
 				List<Topic> result = null;
 				
@@ -103,41 +76,16 @@ public class TopicServlet extends HttpServlet{
 	}
 
 	@Override
-	protected void doDelete(HttpServletRequest req, HttpServletResponse res) throws IOException
-	{
-		ServletOutputStream output = res.getOutputStream();
-		try {		
-			JSONObject jsonData = StreamUtil.getRequestJsonObject(req);
-			TopicAction action = new TopicAction();
-			action.deleteTopic(jsonData);
-			
-			logger.info("delete topic");
-			
-			JSONObject result = new JSONObject();
-			result.put(ServletConstants.HAS_ERROR, false);
-			res.setStatus(ServletConstants.STATUS_CODE_OK);
-			output.println(result.toString());
-			
-		} catch(Exception e) {
-			JSONObject jsonResult = new JSONObject();
-			jsonResult.put(ServletConstants.HAS_ERROR, true);
-			jsonResult.put(ServletConstants.ERROR_MESSAGE, e.getMessage());
-			
-			res.setStatus(ServletConstants.STATUS_CODE_BAD_REQUEST);
-			output.println(jsonResult.toString());
-		} finally {
-			output.close();
-		}
-	}
-	
-	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException
 	{
 		ServletOutputStream output = res.getOutputStream();
 		try {		
-			JSONObject jsonData = StreamUtil.getRequestJsonObject(req);
+			int classId = Integer.parseInt(req.getParameter("classId"));
+			String title = req.getParameter("title");
+			int userId = Integer.parseInt(req.getParameter("userId"));
+			String description = req.getParameter("description");
 			TopicAction action = new TopicAction();
-			action.updateTopic(jsonData);
+			action.createTopic(classId, title, userId, description);
 			
 			logger.info("update topic");
 			

@@ -23,16 +23,11 @@ public class TopicAction {
 		this.transactionOperation = new TransactionOperation();
 	}
 	
-	public boolean createTopic(JSONObject jsonData) throws Exception
+	public boolean createTopic(int classId, String title, int userId, String description) throws Exception
 	{
 		TopicDBFunction func = new TopicDBFunction(this.transactionOperation);
 		
-		String classId = jsonData.getString("classId");
-		String title = jsonData.getString("title");
-		String userId = jsonData.getString("userId");
-		String description = jsonData.getString("description");
-		String dateTime = jsonData.getString("dateTime");
-		func.createTopic(classId, title, userId, description, dateTime);
+		func.createTopic(classId, title, userId, description);
 		return true;
 	}
 	
@@ -80,7 +75,7 @@ public class TopicAction {
 		
 		TopicAction action = new TopicAction();
 		System.out.println(jsonData.toString());
-		action.createTopic(jsonData);
+		//action.createTopic(jsonData);
 		
 		List<Topic> res = action.getTopicList("test");
 		for (Topic item : res)

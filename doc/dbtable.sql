@@ -6,14 +6,14 @@ CREATE TABLE IF NOT EXISTS `policy` (
     `create_time`                       datetime                                             ,
     `comment`                           VARCHAR(512)                                         ,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `admin` (
     `id`                                INT            AUTO_INCREMENT                        ,
     `name`                              VARCHAR(128)   NOT NULL                              ,
     `passwd`                            VARCHAR(512)   NOT NULL                              , 
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `user` (
     `id`                                INT            AUTO_INCREMENT                        ,
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 	`sign`                              VARCHAR(128)                                         ,
 	`isOnline`                          bit                                                  ,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ##sex 0 male 1 female
 
 CREATE TABLE IF NOT EXISTS `topic` (
@@ -40,20 +40,22 @@ CREATE TABLE IF NOT EXISTS `topic` (
     `description`                       VARCHAR(512)                                         ,
     `dateTime`                          DATETIME                                             ,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `class` (
     `id`                                INT            AUTO_INCREMENT                        ,
 	`name`                              VARCHAR(128)   NOT NULL                              ,
 	PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `reply` (
     `id`                                INT            AUTO_INCREMENT                        ,
     `userId`                            INT  NOT NULL                                        ,
     `topicId`                           VARCHAR(512)   NOT NULL                              ,
 	`dateTime`                          DATETIME                                             ,
-    `message`                           VARCHAR(512)                                         ,
+    `message`                           VARCHAR(2048)                                        ,
+    `respTo`                            VARCHAR(2048)                                        ,
+    `respUserId`                        INT                                                  ,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

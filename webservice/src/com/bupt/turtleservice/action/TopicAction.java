@@ -31,21 +31,26 @@ public class TopicAction {
 		return true;
 	}
 	
-	public boolean updateTopic(JSONObject jsonData) throws Exception
+	public boolean updateTopic(String title, String description, int topicId) throws Exception
 	{
 		TopicDBFunction func = new TopicDBFunction(this.transactionOperation);
-		String title = jsonData.getString("title");
-		String description = jsonData.getString("description");
-		String topicId = jsonData.getString("topicId");
-		
-		func.updateTopic(topicId, title, description);
+				
+		func.updateTopic(title, description, topicId);
 		return true;
 	}
 	
-	public boolean deleteTopic(JSONObject jsonData) throws Exception
+	public boolean replyTopic(int userId, int topicId, String message, String respTo, int respUserId) throws Exception
 	{
 		TopicDBFunction func = new TopicDBFunction(this.transactionOperation);
-		String topicId = jsonData.getString("topicId");
+		
+		boolean res = func.replyTopic(userId, topicId, message, respTo, respUserId);
+		return res;
+	}
+	
+	public boolean deleteTopic(int topicId) throws Exception
+	{
+		TopicDBFunction func = new TopicDBFunction(this.transactionOperation);
+		
 		func.deleteTopic(topicId);
 		return true;
 	}

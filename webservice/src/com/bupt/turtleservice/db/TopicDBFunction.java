@@ -37,7 +37,7 @@ public class TopicDBFunction {
 		return true;
 	}
 	
-	public boolean updateTopic(String topicId, String title, String description) throws Exception
+	public boolean updateTopic(String title, String description, int topicId) throws Exception
 	{
 		String sql = "update `topic` set `title` = ? ,`description` = ? where id = ? ;";
 		List<Object> values = new ArrayList<Object>();
@@ -137,7 +137,25 @@ public class TopicDBFunction {
 		return result;
 	}
 	
-	public boolean deleteTopic(String topicId) throws Exception
+	public boolean replyTopic(int userId, int topicId, String message, String respTo, int respUserId) throws Exception
+	{
+		String sql = "INSERT INTO `reply` (`userId`,`topicId`,`dateTime`,`message`,`respTo`, `respUserId`) VALUES (?,?,?,?,?,?);";
+		List<Object> values = new ArrayList<Object>();
+		values.add(userId);
+		values.add(topicId);
+		values.add(DateUtil.getDatetime(new Date()));
+		values.add(message);
+		values.add(respTo);
+		values.add(respUserId);
+		
+		this.transactionOperation.beginTransaction();
+		ResultSet res = this.transactionOperation.exec(sql, values);
+		this.transactionOperation.commitTransaction();
+		return true;
+	}
+	
+	
+	public boolean deleteTopic(int topicId) throws Exception
 	{
 		String sql = "DELETE FROM TABLE `topic` WHERE `id` = ?;";
 		List<Object> values = new ArrayList<Object>();

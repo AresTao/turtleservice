@@ -32,7 +32,7 @@ public class TopicServlet extends HttpServlet{
 	private static Logger logger = Logger.getLogger(TopicServlet.class);
 	
 	/*
-	 * get /topic?key=XXXXXXX
+	 * get /topic?key=XXXXXXX&classId=XXXX
 	 * get topic list
 	 * 
 	 * get /topic?topicId=XXXXX
@@ -45,6 +45,7 @@ public class TopicServlet extends HttpServlet{
 		ServletOutputStream output = res.getOutputStream();
 		try {
 			String classId = req.getParameter("classId");
+			logger.info("get test");
 			String key = req.getParameter("key");
 			TopicAction func = new TopicAction();
 			JSONObject jsonData;
@@ -81,13 +82,76 @@ public class TopicServlet extends HttpServlet{
 		ServletOutputStream output = res.getOutputStream();
 		try {		
 			int classId = Integer.parseInt(req.getParameter("classId"));
+			
 			String title = req.getParameter("title");
 			int userId = Integer.parseInt(req.getParameter("userId"));
 			String description = req.getParameter("description");
-			TopicAction action = new TopicAction();
-			action.createTopic(classId, title, userId, description);
+			String method = req.getParameter("method");
 			
-			logger.info("update topic");
+			TopicAction action = new TopicAction();
+			if (StringUtil.isBlank(method))
+			{
+				action.createTopic(classId, title, userId, description);
+				logger.info("create topic "+title);
+			} else {
+				int topicId = Integer.parseInt(req.getParameter("topicId"));
+				if (StringUtil.isBlank(req.getParameter("topicId")))
+				{
+					JSONObject jsonResult = new JSONObject();
+					jsonResult.put(ServletConstants.HAS_ERROR, true);
+					jsonResult.put(ServletConstants.ERROR_MESSAGE, "no topicId param");
+					
+					res.setStatus(ServletConstants.STATUS_CODE_BAD_REQUEST);
+					output.println(jsonResult.toString());
+				}
+				if (method.equals("reply"))
+				{
+					String message = req.getParameter("message");
+					String respTo = req.getParameter("respTo");
+					if (StringUtil.isBlank(respTo))
+					{
+						respTo = "";
+					}
+					int respUserId;
+					if (! StringUtil.isBlank(req.getParameter("respUserId")))
+					{
+						respUserId = Integer.parseInt(req.getParameter("respUserId"));
+					} else
+					{
+						respUserId = -1;
+					}
+					
+					if (StringUtil.isBlank(message))
+					{
+						JSONObject jsonResult = new JSONObject();
+						jsonResult.put(ServletConstants.HAS_ERROR, true);
+						jsonResult.put(ServletConstants.ERROR_MESSAGE, "no message param");
+						
+						res.setStatus(ServletConstants.STATUS_CODE_BAD_REQUEST);
+						output.println(jsonResult.toString());
+					}
+					action.replyTopic(userId, topicId, message, respTo, respUserId);
+					logger.info("reply topic ");
+				}
+				else if (method.equals("update"))
+				{
+					action.updateTopic(title, description, topicId);
+					logger.info("update topic");
+				} else if (method.equals("delete"))
+				{
+					action.deleteTopic(topicId);
+					logger.info("delete topic");
+				} else
+				{
+					JSONObject jsonResult = new JSONObject();
+					jsonResult.put(ServletConstants.HAS_ERROR, true);
+					jsonResult.put(ServletConstants.ERROR_MESSAGE, "unsupport method param");
+						
+					res.setStatus(ServletConstants.STATUS_CODE_BAD_REQUEST);
+					output.println(jsonResult.toString());
+					logger.error("unsupport method");
+				}
+			}
 			
 			JSONObject result = new JSONObject();
 			result.put(ServletConstants.HAS_ERROR, false);

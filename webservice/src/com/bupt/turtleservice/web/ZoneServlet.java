@@ -1,6 +1,8 @@
 package com.bupt.turtleservice.web;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
@@ -33,7 +35,10 @@ public class ZoneServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException
 	{
-		ServletOutputStream output = res.getOutputStream();
+		//ServletOutputStream output = res.getOutputStream();
+		res.setContentType("application/json;charset=utf-8");
+		res.setCharacterEncoding("utf-8");
+		PrintWriter output = res.getWriter(); 
 		try {
 			
 			List<String> result = null;
@@ -55,7 +60,7 @@ public class ZoneServlet extends HttpServlet{
 		}
 	}
 
-	private JSONObject convertZoneList2JSON(List<String> result) {
+	private JSONObject convertZoneList2JSON(List<String> result) throws Exception {
 		JSONObject res = new JSONObject();
 		JSONArray detail = new JSONArray();
 		JSONObject item;
@@ -63,8 +68,8 @@ public class ZoneServlet extends HttpServlet{
 		for (String zone : result)
 		{
 			item = new JSONObject();
-			item.accumulate("name", zone);
-			
+			item.accumulate("name",zone);//new String(zone.getBytes("ISO-8859-1"),"GBK"));
+			logger.info(zone);
 			detail.add(item);
 		}
 		

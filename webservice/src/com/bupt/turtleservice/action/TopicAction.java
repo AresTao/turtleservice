@@ -55,10 +55,17 @@ public class TopicAction {
 		return true;
 	}
 	
-	public List<Topic> getTopicList(String key)
+	public List<Topic> getTopicListByClassId(int classId)
 	{
 		TopicDBFunction func = new TopicDBFunction(this.transactionOperation);
-		List<Topic> res = func.getTopicList(key);
+		List<Topic> res = func.getTopicListByClassId(classId);
+		return res;
+	}
+	
+	public List<Topic> getTopicListByClassIdAndKey(int classId, String key)
+	{
+		TopicDBFunction func = new TopicDBFunction(this.transactionOperation);
+		List<Topic> res = func.getTopicListByClassIdAndKey(classId, key);
 		return res;
 	}
 	
@@ -82,7 +89,7 @@ public class TopicAction {
 		System.out.println(jsonData.toString());
 		//action.createTopic(jsonData);
 		
-		List<Topic> res = action.getTopicList("test");
+		List<Topic> res = action.getTopicListByClassIdAndKey(1,"test");
 		for (Topic item : res)
 		{
 			System.out.println(item.getDescription());

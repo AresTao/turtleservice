@@ -45,15 +45,21 @@ public class TopicServlet extends HttpServlet{
 		ServletOutputStream output = res.getOutputStream();
 		try {
 			String classId = req.getParameter("classId");
-			logger.info("get test");
 			String key = req.getParameter("key");
 			TopicAction func = new TopicAction();
 			JSONObject jsonData;
 			if (! StringUtil.isBlank(key) && ! StringUtil.isBlank(classId))
 			{
 				List<Topic> result = null;
-				
-				result = func.getTopicList(key);
+				int classIdInt = Integer.parseInt(classId);
+				result = func.getTopicListByClassIdAndKey(classIdInt,key);
+			
+				jsonData = convertTopicList2JSON(result);
+			} else if (StringUtil.isBlank(key) && !StringUtil.isBlank(classId))
+			{
+				List<Topic> result = null;
+				int classIdInt = Integer.parseInt(classId);
+				result = func.getTopicListByClassId(classIdInt);
 			
 				jsonData = convertTopicList2JSON(result);
 			} else
@@ -81,10 +87,18 @@ public class TopicServlet extends HttpServlet{
 	{
 		ServletOutputStream output = res.getOutputStream();
 		try {		
-			int classId = Integer.parseInt(req.getParameter("classId"));
+			String classIdStr= req.getParameter("classId");
+			int classId=-1;
+			if (!StringUtil.isBlank(classIdStr))
+			{
+				classId = Integer.parseInt(classIdStr);	
+			}
 			
 			String title = req.getParameter("title");
-			int userId = Integer.parseInt(req.getParameter("userId"));
+			String userIdStr = req.getParameter("userId");
+			int userId;
+			userId = Integer.parseInt(userIdStr);
+			
 			String description = req.getParameter("description");
 			String method = req.getParameter("method");
 			
@@ -206,6 +220,7 @@ public class TopicServlet extends HttpServlet{
 		for (Topic data : result)
 		{
 			item = new JSONObject();
+			item.accumulate("id", data.getTopicId());
 			item.accumulate("title", data.getTitle());
 			item.accumulate("description", data.getDescription());
 			item.accumulate("createTime", data.getCreateTime());

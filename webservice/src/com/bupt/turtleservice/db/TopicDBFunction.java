@@ -51,11 +51,39 @@ public class TopicDBFunction {
 		return true;
 	}
 	
-	public List<Topic> getTopicList(String key)
+	public List<Topic> getTopicListByClassIdAndKey(int classId, String key)
 	{
-		String sql = "select * from topic left join class on topic.classId = (select id from class where name = ?);";
+		String sql = "select * from topic where `classId` = "+classId+" AND `title` LIKE '%"+ key +"%';"; 
+		
+		List<Topic> result = null;
+		
+		try{
+			ResultSet res = this.transactionOperation.exec(sql);
+			result = new ArrayList<Topic>();
+			while(res.next())
+			{
+				Topic item = new Topic();
+				item.setTopicId(res.getInt("id"));
+				item.setTitle(res.getString("title"));
+				item.setCreateTime(res.getString("dateTime"));
+				item.setDescription(res.getString("description"));
+				
+				result.add(item);
+			}
+		}
+		catch (Exception e) {
+			logger.error("select topic error");
+		}
+		
+		return result;
+	}
+	
+	public List<Topic> getTopicListByClassId(int classId)
+	{
+		//String sql = "select * from topic left join class on topic.classId = (select id from class where name = ?);";
+		String sql = "select * from topic where `classId` = ?";
 		List<Object> values = new ArrayList<Object>();
-		values.add(key);
+		values.add(classId);
 		
 		List<Topic> result = null;
 		
